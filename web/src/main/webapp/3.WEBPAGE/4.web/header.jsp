@@ -28,7 +28,7 @@
 					<div class="col-md-4 d-flex justify-content-end">	<!-- 상단 메뉴 -->
 						<ul class="nav">	<!-- 가로 배치 -->
 							<li><a href="#">로그인</a> | </li>
-							<li><a href="#">회원가입</a> | </li>
+							<li><a href="signup.jsp">회원가입</a> | </li>
 							<li><a href="#">장바구니</a></li>
 						</ul>
 					</div>
@@ -53,7 +53,7 @@
 						<li class="nav-item" class="nav-link"><a href="#">악세사리</a></li>
 						<li class="nav-item" class="nav-link"><a href="#">스타일</a></li>
 						<li class="nav-item" class="nav-link"><a href="#">리뷰</a></li>
-						<li class="nav-item" class="nav-link"><a href="#">고객센터</a></li>
+						<li class="nav-item" class="nav-link"><a href="boardlist.jsp">고객센터</a></li>
 						<li class="nav-item" class="nav-link"><a href="#"> <i class="fas fa-search"></i> </a></li>
 					</ul>
 				</div>
