@@ -1,0 +1,107 @@
+@charset "EUC-KR";
+
+*{font-family: "³ª´®°íµñ";}
+
+.tophead{
+	font-size: 12px;
+	margin-left: 20px;
+}
+
+a{text-decoration: none; color: black;}
+a:hover {
+	color: #cccccc;
+}
+
+.sidemenu{
+	position: fixed;
+	left: 10px;
+	margin-top: 80px;
+}
+
+.sidebartxt1{
+	font-size: 11px;
+	font-weight: bold;
+}
+.sidebartxt2{font-size: 11px;}
+
+.sidebar{list-style-type: none;}
+
+.content{
+	margin-top: 80px;	
+}
+
+.maintxt{
+	font-size: 12px;
+	color: #cccccc;
+}
+
+.bodytxt{
+	font-size: 12px;
+}
+
+.bodyprice{
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.bodytxt2{
+	font-size: 11px;
+	color: #cccccc;
+}
+
+.footer{
+	font-size: 12px;
+	line-height: 180%;
+	margin-top: 50px;
+}
+
+.footerli {
+	list-style-type: none;
+}
+.footerhead{
+	color: #cccccc;	
+	font-weight: bold;
+	letter-spacing: 5px;
+	font-size: 15px;
+}
+
+#phone{
+	font-size: 25px;
+	font-weight: bold;
+}
+
+#qa{
+	color: gray;
+}
+
+#a{font-weight: bold;}
+
+.login{
+	font-size: 12px;
+	margin-top: 80px;
+}
+
+#login{
+	background-color: black;
+	color: white;
+	height: 100%;
+}
+
+#mainhead{
+	text-align: center;
+	
+}
+
+#findid{
+	font-size: 12px;
+	padding: 15px;
+}
+#findid li{padding: 10px;}
+
+#lock{
+	color: #ed5e07;
+}
+
+#botbox{
+	padding-top: 50px;
+}
