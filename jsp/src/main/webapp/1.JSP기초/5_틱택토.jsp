@@ -12,6 +12,7 @@
 	<%! 
 	String 승리알 =" ";
 	String[] 게임판 = {" "," "," ", " "," ", " "," ", " "," "};  
+	String name ="";
 	%>
 
 	<%
@@ -43,6 +44,18 @@
 				승리알=게임판[4];
 			}
 		}
+		
+		if(request.getParameter("초기화")!=null){
+			name = request.getParameter("초기화");
+			if(name.equals("초기화")){
+				for(int i=0; i<9; i++){
+					게임판[i] = " ";
+				}
+				승리알 = " ";
+			}
+		}
+		
+				
 
 	%>
 	
@@ -55,9 +68,11 @@
 				<form action="5_틱택토.jsp" method="get">
 				<input type="text" name=num value="<%=i %>" hidden="">
 				<input type="submit" value="<%=게임판[i]%>" 
-				<%if(!승리알.equals(" ")){ %>
+				
+				<%if(게임판[i].equals("X") || 게임판[i].equals("O")){ %>
 					disabled="disabled"
-				<% }%>>
+				<% }%>
+				>
 				</form>	
 			</td>
 			<%if(i%3==2) {%>
@@ -72,5 +87,8 @@
 	<%if(승리알.equals("O")){ %>
 	<span>유저 승리!</span>
 	<%} %>
+	<form action="5_틱택토.jsp" method="get">
+		<input type="submit" value="초기화" name="초기화">
+	</form>
 </body>
 </html>
