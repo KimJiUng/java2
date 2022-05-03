@@ -5,12 +5,16 @@
 <head>
 </head>
 <body>
-	<%String loginid =(String)session.getAttribute("loginid"); %>
+	<%
+	session.setAttribute("logincheck", null);
+	%>
 	<%@include file="header.jsp" %>
+	
 	<div class="container">
-		<div><%=loginid %>님 안녕하세요 ~</div>
-		<button onclick="logout" type="button">로그아웃</button>
+		<div <%if(loginid==null){ %> hidden="" <%} %>><%=loginid %>님 안녕하세요 ~</div>
+		<a href="/jspweb/member/logout.jsp" <%if(loginid==null){ %> hidden="" <%} %>><button>로그아웃</button></a>
 	</div>
+	
 	<script src="/jspweb/js/main.js" type="text/javascript"></script>
 	<%@include file="footer.jsp" %>
 

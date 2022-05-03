@@ -9,12 +9,12 @@ public class MemberDao extends Dao {
 	public static MemberDao memberDao = new MemberDao();
 	
 	
-	// 아이디 중복체크
-	public boolean idcheck(String mid) {
+	// 아이디,이메일 중복체크
+	public boolean check(String table,String value) {
 		try {
-			String sql = "select * from member where mid=?";
+			String sql = "select * from member where "+table+"=?";
 			ps = con.prepareStatement(sql);
-			ps.setString(1, mid);
+			ps.setString(1, value);
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				return true;

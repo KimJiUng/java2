@@ -9,33 +9,31 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.MemberDao;
 
-/**
- * Servlet implementation class idcheck
- */
-@WebServlet("/Idcheck")
-public class Idcheck extends HttpServlet {
+
+@WebServlet("/Emailcheck")
+public class Emailcheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public Idcheck() {
+
+    public Emailcheck() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
-    
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String mid = request.getParameter("mid");
-		String table = "mid";
-		// 1. Dao를 이용한 해당 id가 있는지 체크
-		boolean result = MemberDao.memberDao.check(table,mid);
-		// 2. 만약에 해당 아이디가 존재하면 1 존재하지 않으면 2
+		String email = request.getParameter("email");
+		String table = "memail";
+		boolean result = MemberDao.memberDao.check(table,email);
 		if(result) {
 			response.getWriter().print(1);
 		}else {
 			response.getWriter().print(2);
 		}
-		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
+
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

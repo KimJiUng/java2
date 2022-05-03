@@ -13,10 +13,11 @@
 
 </head>
 <body>
+	<%String loginid =(String)session.getAttribute("loginid"); %>
 	<div class="container">
 		헤더페이지 [모든 페이지에서 사용되기 때문에 -> 최상위에서 절대 경로]<br>
 		<a href="/jspweb/main.jsp">home</a><br>
-		<a href="/jspweb/member/login.jsp">로그인</a><br>
+		<a href="/jspweb/member/login.jsp" <%if(loginid!=null){ %> hidden="" <%} %>>로그인</a><br>
 		<a href="/jspweb/member/signup.jsp">회원가입</a><br>
 		<br><br><br>
 	</div>

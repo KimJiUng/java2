@@ -24,17 +24,23 @@
 			전화번호 : <input type="text" id="mphone" placeholder="전화번호">
 			<span id="phonecheck"></span>
 			<br>
-			이메일 : <input type="text" id="memail" placeholder="이메일">
+			이메일 : <input type="text" id="memail" placeholder="이메일">@
+			<input type="text" id="memailaddress">
+			<select id="emailselect">
+				<option value="">직접입력</option>
+				<option value="naver.com">naver.com</option>
+				<option value="nate.com">nate.com</option>
+				<option value="daum.com">daum.com</option>
+			</select>
 			<span id="emailcheck"></span>
 			<br>
 			<input type="text" id="sample4_postcode" placeholder="우편번호">
-			<br>
 			<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
 			<input type="text" id="sample4_roadAddress" placeholder="도로명주소">
 			<input type="text" id="sample4_jibunAddress" placeholder="지번주소">
 			<span id="guide" style="color:#999;display:none"></span>
 			<input type="text" id="sample4_detailAddress" placeholder="상세주소">
-			<input type="text" id="sample4_extraAddress" placeholder="참고항목">
+			<span id="addresscheck"></span>
 			<button onclick="signup()" type="button">가입하기</button>
 			<span id="signupcheck"></span>
 		</form>
