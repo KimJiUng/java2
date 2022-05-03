@@ -3,18 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
-	<%
-	session.setAttribute("logincheck", null);
-	%>
+
 	<%@include file="header.jsp" %>
-	
-	<div class="container">
-		메인페이지
+	<div>
+		<h3>오류!! 관리자에게 문의</h3>
 	</div>
-	
-	<script src="/jspweb/js/main.js" type="text/javascript"></script>
 	<%@include file="footer.jsp" %>
 
 </body>

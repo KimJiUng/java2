@@ -3,19 +3,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
-	<%
-	session.setAttribute("logincheck", null);
-	%>
+
 	<%@include file="header.jsp" %>
-	
-	<div class="container">
-		메인페이지
+	<div>
+		<h3>축하합니다! 회원가입이 완료되었습니다.</h3>
 	</div>
-	
-	<script src="/jspweb/js/main.js" type="text/javascript"></script>
 	<%@include file="footer.jsp" %>
+
 
 </body>
 </html>

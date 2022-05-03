@@ -42,7 +42,7 @@ public class MemberDao extends Dao {
 	}
 	
 	// 로그인
-	public boolean login(String id, String password) {
+	public int login(String id, String password) {
 		try {
 			String sql = "select * from member where mid=? and mpassword=?";
 			ps = con.prepareStatement(sql);
@@ -50,10 +50,11 @@ public class MemberDao extends Dao {
 			ps.setString(2, password);
 			rs = ps.executeQuery();
 			if(rs.next()) {
-				return true;
+				return 1;
 			}
+			return 2;
 		} catch(Exception e) {System.out.println("로그인 오류 : "+e);}
-		return false;
+		return 3;
 	}
 	
 	

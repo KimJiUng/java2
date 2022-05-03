@@ -128,7 +128,9 @@ $(function(){ // 문서 열리면 해당코드가 실행
 		
 	});
 	
-	
+	$("#sample4_postcode").attr("readonly", true);
+	$("#sample4_roadAddress").attr("readonly", true);
+	$("#sample4_jibunAddress").attr("readonly", true);
 	
 	// 주소 체크
 	$("#sample4_detailAddress").keyup(function(){
@@ -295,10 +297,9 @@ function signup(){
 				} ,			// 통신할때 보내는 데이터
 			success : function(result){	// 통신 성공후 받는 데이터
 				if(result.charAt(0)==1){
-					alert("회원가입이 완료되었습니다.")
-					location.href = "/jspweb/main.jsp";
+					location.href = "/jspweb/signupsucess.jsp";
 				}else{
-					alert("회원가입 실패 관리자에게 문의")
+					location.href = "/jspweb/error.jsp";
 				}
 			}
 		}); // ajax end
