@@ -275,7 +275,7 @@ function signup(){
 	let mname = $("#mname").val();
 	let mphone = $("#mphone").val();
 	let memail = $("#memail").val()+"@"+$("#memailaddress").val();
-	let maddress = $("#sample4_roadAddress").val()+" "+$("#sample4_detailAddress").val();
+	let maddress = $("#sample4_postcode").val()+"_"+$("#sample4_roadAddress").val()+"_"+$("#sample4_jibunAddress").val()+"_"+$("#sample4_detailAddress").val();
 	
 	if(
 		$("#idcheck").text() == "사용 가능한 아이디입니다." && 
@@ -297,7 +297,7 @@ function signup(){
 				} ,			// 통신할때 보내는 데이터
 			success : function(result){	// 통신 성공후 받는 데이터
 				if(result.charAt(0)==1){
-					location.href = "/jspweb/signupsucess.jsp";
+					location.href = "/jspweb/member/signupsucess.jsp";
 				}else{
 					location.href = "/jspweb/error.jsp";
 				}
@@ -308,3 +308,9 @@ function signup(){
 	}
 	
 }
+
+
+function btnpasswordchange(){
+	$("#passwordbox").css("display","block");
+}
+

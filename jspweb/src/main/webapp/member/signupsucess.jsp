@@ -8,11 +8,11 @@
 </head>
 <body>
 
-	<%@include file="header.jsp" %>
-	<div>
+	<%@include file="../header.jsp" %>
+	<div class="container">
 		<h3>축하합니다! 회원가입이 완료되었습니다.</h3>
 	</div>
-	<%@include file="footer.jsp" %>
+	<%@include file="../footer.jsp" %>
 
 
 </body>

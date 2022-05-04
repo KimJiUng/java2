@@ -30,7 +30,6 @@ public class Login extends HttpServlet {
 		String mid = request.getParameter("mid");
 		String mpassword = request.getParameter("mpassword");
 		int result = MemberDao.memberDao.login(mid, mpassword);
-		System.out.println("asd"+result);
 		if (result==1) { // 로그인 성공
 			// 로그인 성공시 세션 부여 [ 세션 : 서버에 메모리 할당 => 모든 페이지에서 동일한 메모리 사용 가능 ]
 			HttpSession session = request.getSession(); // 1. Http 내장 세션 호출

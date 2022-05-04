@@ -26,7 +26,6 @@
 				<!-- 만약에 로그인 실패시 -->
 				<%
 					String result = request.getParameter("result");
-					System.out.println(result);
 					if(result!=null && result.equals("2")){
 				%>
 					<span class="signuptext">동일한 회원정보가 없습니다.</span>

@@ -19,37 +19,52 @@
 	
 	
 	
-	<div class="fixed-top">
+	<div class="fixed-top bg-white">
 		<div class="container">
-			<!-- 공통 -->
-			<div class="col-md-5 offset-5">
-				<h3><a href="/jspweb/main.jsp">Home</a></h3>
-			</div>
 			<!-- 로그인 안된 상태 -->
 			<%if(loginid==null){ %>
-			<div class="row">
-				<div class="col-md-1 offset-10">
-					<a href="/jspweb/member/signup.jsp">회원가입</a>
-				</div>
-				<div class="col-md-1">
-					<a href="/jspweb/member/login.jsp">로그인</a>
-				</div>
+			<div class="d-flex justify-content-end">
+				<ul class="nav">
+					<li class="ms-3"><a href="/jspweb/member/login.jsp">로그인</a></li>
+					<li class="ms-3"><a href="/jspweb/member/signup.jsp">회원가입</a></li>
+					<li class="ms-3"><a href="/jspweb/member/login.jsp">나의쇼핑</a></li>
+					<li class="ms-3"><a href="#">고객센터</a></li>
+				</ul>
 			</div>
 			<%} %>
 			<!-- 만약에 로그인된 상태 -->
 			<%if(loginid!=null) {%>
-			<div class="row">
-				<div class="col-md-1 offset-9">
-					<span><%=loginid %>님</span>
-				</div>
-				<div class="col-md-1">
-					<a href="/jspweb/member/memberinfo.jsp">회원정보</a>
-				</div>
-				<div class="col-md-1">
-					<a href="Logout">로그아웃</a>
-				</div>
+			<div class="d-flex justify-content-end">
+				<ul class="nav">
+					<li class="ms-3"><span><%=loginid %>님</span></li>
+					<li class="ms-3"><a href="/jspweb/member/info.jsp">회원정보</a></li>
+					<li class="ms-3"><a href="/jspweb/member/myshopping.jsp">나의쇼핑</a></li>
+					<li class="ms-3"><a href="#">고객센터</a></li>
+					<li class="ms-3"><a href="/jspweb/Logout">로그아웃</a></li>
+				</ul>
 			</div>
 			<%} %>
+			<!-- 공통 -->
+			<div class="col-md-5 offset-5">
+				<h3><a href="/jspweb/main.jsp">Home</a></h3>
+			</div>
+			<div>
+				<a href="#">BIG SIZE</a>
+				<a href="#">MUSCLE-FIT</a>
+				<a href="#">1+1 이벤트</a>
+				<a href="#">아우터</a>
+				<a href="#">상의</a>
+				<a href="#">바지</a>
+				<a href="#">슈즈</a>
+				<a href="#">악세사리</a>
+				<a href="#">BEST</a>
+				<a href="#">트레이닝</a>
+				<a href="#">모델처럼입자</a>
+				<a href="#">50% 할인</a>
+				<input type="text"><button>검색</button>
+				<a href="#"><img alt="" src="">장바구니 이미지</a>
+			</div>
+			
 		</div>
 	</div>
 	<br><br><br><br><br><br>
