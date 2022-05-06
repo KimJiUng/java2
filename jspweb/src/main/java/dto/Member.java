@@ -98,6 +98,13 @@ public class Member {
 	public void setMsince(String msince) {
 		this.msince = msince;
 	}
+
+	@Override
+	public String toString() {
+		return "Member [mnum=" + mnum + ", mid=" + mid + ", mpassword=" + mpassword + ", mname=" + mname + ", mphone="
+				+ mphone + ", memail=" + memail + ", maddress=" + maddress + ", mpoint=" + mpoint + ", msince=" + msince
+				+ "]";
+	}
 	
 	
 	

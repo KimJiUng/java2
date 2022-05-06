@@ -111,7 +111,18 @@ public class MemberDao extends Dao {
 		return false;
 	}
 	
-	
+	// 회원 번호로 회원 아이디 가져오기
+	public String getmid(int mnum) {
+		try {
+			String sql = "select mid from member where mnum='"+mnum+"'";
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				return rs.getString(1);
+			}
+		}catch(Exception e) {System.out.println("회원아이디 가져오기 오류 : "+e);}
+		return null;
+	}
 	
 	
 	

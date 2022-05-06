@@ -28,7 +28,7 @@
 					<li class="ms-3"><a href="/jspweb/member/login.jsp">로그인</a></li>
 					<li class="ms-3"><a href="/jspweb/member/signup.jsp">회원가입</a></li>
 					<li class="ms-3"><a href="/jspweb/member/login.jsp">나의쇼핑</a></li>
-					<li class="ms-3"><a href="#">고객센터</a></li>
+					<li class="ms-3"><a href="/jspweb/board/boardlist.jsp">자유게시판</a></li>
 				</ul>
 			</div>
 			<%} %>
@@ -39,7 +39,7 @@
 					<li class="ms-3"><span><%=loginid %>님</span></li>
 					<li class="ms-3"><a href="/jspweb/member/info.jsp">회원정보</a></li>
 					<li class="ms-3"><a href="/jspweb/member/myshopping.jsp">나의쇼핑</a></li>
-					<li class="ms-3"><a href="#">고객센터</a></li>
+					<li class="ms-3"><a href="/jspweb/board/boardlist.jsp">자유게시판</a></li>
 					<li class="ms-3"><a href="/jspweb/Logout">로그아웃</a></li>
 				</ul>
 			</div>
