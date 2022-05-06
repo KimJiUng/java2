@@ -11,8 +11,6 @@ public class Dao {
 	protected Connection con;
 	protected ResultSet rs;
 	
-	public static MemberDao memberDao = new MemberDao();
-	
 	public Dao() { 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
