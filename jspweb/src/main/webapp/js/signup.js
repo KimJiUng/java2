@@ -9,6 +9,10 @@
 
 
 $(function(){ // 문서 열리면 해당코드가 실행
+	if($("#namecheck").text() == ""){
+		$("#btnupdate").css("display","block");
+		
+	}
 	
 	$("#mid").keyup(function(){
 		
@@ -58,6 +62,7 @@ $(function(){ // 문서 열리면 해당코드가 실행
 		let emailj =  /^[0-9a-zA-Z]{3,20}$/;
 		if(epass==false){
 			$("#emailcheck").html("이메일 주소를 입력해주세요.");
+			$("#btnupdate").css("display","none");
 		}else{
 			if(emailj.test(memail)){
 			let email = $("#memail").val()+"@"+$("#memailaddress").val();
@@ -67,13 +72,16 @@ $(function(){ // 문서 열리면 해당코드가 실행
 					success : function(result){	// 통신 성공후 받는 데이터
 						if(result.charAt(0)==1){
 							emailcheck.innerHTML = "이미 사용중인 이메일입니다.."
+							$("#btnupdate").css("display","none");
 						}else{
 							emailcheck.innerHTML = "사용 가능한 이메일입니다."
+							$("#btnupdate").css("display","block");
 						}
 					}
 				}); // ajax end
 			}else{
 				$("#emailcheck").html("이메일 형식이 올바르지 않습니다.");
+				$("#btnupdate").css("display","none");
 			}
 		}	
 	});
@@ -85,6 +93,7 @@ $(function(){ // 문서 열리면 해당코드가 실행
 			$("#memailaddress").val("");
 			$("#memailaddress").attr("readonly", false);
 			$("#emailcheck").html("이메일 형식이 올바르지 않습니다.");
+			$("#btnupdate").css("display","none");
 			// 이메일 체크
 			$("#memailaddress").keyup(function(){
 				let memailaddress = $("#memailaddress").val();
@@ -98,13 +107,16 @@ $(function(){ // 문서 열리면 해당코드가 실행
 						success : function(result){	// 통신 성공후 받는 데이터
 							if(result.charAt(0)==1){
 								emailcheck.innerHTML = "이미 사용중인 이메일입니다.."
+								$("#btnupdate").css("display","none");
 							}else{
 								emailcheck.innerHTML = "사용 가능한 이메일입니다."
+								$("#btnupdate").css("display","block");
 							}
 						}
 					}); // ajax end
 				}else{
 					$("#emailcheck").html("이메일 형식이 올바르지 않습니다.");
+					$("#btnupdate").css("display","none");
 					epass = false;
 				}
 			});
@@ -119,8 +131,10 @@ $(function(){ // 문서 열리면 해당코드가 실행
 				success : function(result){	// 통신 성공후 받는 데이터
 					if(result.charAt(0)==1){
 						emailcheck.innerHTML = "이미 사용중인 이메일입니다.."
+						$("#btnupdate").css("display","none");
 					}else{
 						emailcheck.innerHTML = "사용 가능한 이메일입니다."
+						$("#btnupdate").css("display","block");
 					}
 				}
 			}); // ajax end
@@ -142,8 +156,10 @@ $(function(){ // 문서 열리면 해당코드가 실행
 		
 		if(address1 == "" || address2 == "" || address3 == "" || address4 == ""){
 			$("#addresscheck").html("모든 주소를 입력해주세요.");
+			$("#btnupdate").css("display","none");
 		}else{
 			$("#addresscheck").html("사용 가능한 주소입니다.");
+			$("#btnupdate").css("display","block");
 		}
 	});
 	
@@ -193,8 +209,11 @@ $(function(){ // 문서 열리면 해당코드가 실행
 		let namej = /^[가-힣]{2,10}$/; // 한글만 2~10 정규표현식
 		if(namej.test(mname)){
 			$("#namecheck").html("사용 가능한 이름입니다.")
+			$("#btnupdate").css("display","block");
+	
 		}else{
 			$("#namecheck").html("한글 2~10 사이만 가능합니다.")
+			$("#btnupdate").css("display","none");
 		}
 	}); // keyup end
 	
@@ -204,10 +223,13 @@ $(function(){ // 문서 열리면 해당코드가 실행
 		let phonej = /^([0-9]{2,3})-([0-9]{3,4})-([0-9]{3,4})$/;
 		if(phonej.test(mphone)){
 			$("#phonecheck").html("사용가능한 전화번호입니다.")
+			$("#btnupdate").css("display","block");
 		}else{
 			$("#phonecheck").html("지역번호-0000-0000 형식으로 입력해주세요.")
+			$("#btnupdate").css("display","none");
 		}
 	});
+	
 	
 	
 	

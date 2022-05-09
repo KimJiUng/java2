@@ -1,3 +1,5 @@
+<%@page import="dao.BoardDao"%>
+<%@page import="dto.Board"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,28 +17,53 @@
    	
 </head>
 <body>
-
+	
+	<%
+	int update;
+	if(request.getParameter("update")!=null){
+		update = Integer.parseInt(request.getParameter("update"));
+	}else{
+		update=0;
+	}
+	%>
 	<%@include file="../header.jsp" %>
 	<%if(loginid==null){ %>
 	<div class="container">
 	로그인 이후 이용 가능
 	<%} else{%>
 		<div class="text-center">
-			<h3>글쓰기</h3>
+			<%if(update==1) {%>
+				<h3>수정하기</h3>
+			<%} else {%>
+				<h3>글쓰기</h3>
+			<%} %>
 		</div>
 		<a href="boardlist.jsp">목록보기</a>
 		<br><br>
-		<%if(request.getParameter("result")!=null && request.getParameter("result").equals("2")){%>
-			글 작성 실패! 관리자에게 문의	
-		<%} %>
+		<%if(update==1){%>
+			<%int bnum = Integer.parseInt(request.getParameter("bnum"));
+			Board board = BoardDao.boardDao.getboard(bnum); %>
+				<form action="../board/Update?bnum=<%=bnum %>" method="post" enctype="multipart/form-data">
+					제목 : <input type="text" name="btitle" value="<%=board.getBtitle() %>"><br>
+					내용 : <textarea name="bcontent" id="summernote" ><%=board.getBcontent() %></textarea><br>
+					<%if(board.getBfile()!=null) {%>
+					첨부파일 :<%=board.getBfile() %><button type="button" onclick="filedelete(<%=bnum%>)">파일삭제</button>
+					<%}else{ %>
+					첨부파일 :
+					<%} %>
+					<br> <input type="file" name="bfile" id="bfile">
+					<input type="submit" value="등록"><input type="reset" value="취소">
+				</form>
+			<%}else{ %>
 		<form action="../board/Write" method="post" enctype="multipart/form-data">
 			<!-- form 전송 인코딩 타입 : 기본타입은 첨부파일 불가능 -->
 			<!-- form 첨부파일 전송 인코딩 타입 : multipart/form-data -->
 			제목 : <input type="text" name="btitle"><br>
-			내용 : <textarea type="text" name="bcontent" id="summernote"></textarea><br>
-			첨부파일 : <input type="file" name="bfile">
+			내용 : <textarea name="bcontent" id="summernote"></textarea><br>
+			첨부파일 :<input type="file" name="bfile" id="bfile"> 
 			<input type="submit" value="등록"><input type="reset" value="취소">
 		</form>
+		<%} %>
 	</div>
 	<%} %>
 	<!-- 썸머노트 js cdn -->

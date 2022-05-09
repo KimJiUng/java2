@@ -3,6 +3,8 @@ package dao;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import dto.Board;
 
 public class BoardDao extends Dao {
@@ -11,6 +13,7 @@ public class BoardDao extends Dao {
 		super();
 	}
 	public static BoardDao boardDao = new BoardDao();
+	
 	// 1. 게시물 쓰기 메소드
 	public boolean write(Board board) {
 		try {
@@ -30,11 +33,11 @@ public class BoardDao extends Dao {
 	public ArrayList<Board> getboardlist() {
 		try {
 			ArrayList<Board> boardlist = new ArrayList<Board>();
-			String sql = "select * from board";
+			String sql = "select * from board order by bnum desc";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				String mid = memberDao.getmid(rs.getInt(4));
+				String mid = MemberDao.memberDao.getmid(rs.getInt(4));
 				Board board = new Board(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getString(6), rs.getString(7), mid);
 				boardlist.add(board);
 			}
@@ -43,6 +46,27 @@ public class BoardDao extends Dao {
 		return null;
 	}
 	
+	// 2-2. 게시물 10개씩 출력 메소드
+	public ArrayList<Board> getboardlist10(){
+		try {
+			int bcount = count();
+			String sql = "select * from board order by bnum desc limit 10 offset ?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, bcount);
+		} catch(Exception e) {System.out.println("게시물10개 출력 오류 : "+e);}
+		return null;
+	}
+	
+	public int count() {
+      try {
+         String sql = "select count(bnum) from board";
+         ps = con.prepareStatement(sql);
+         rs = ps.executeQuery();
+         if(rs.next()) {return rs.getInt(1);}
+      }catch(Exception e) {System.out.println("count error : "+e);}
+      return 0;
+   }
+	
 	// 3. 개별 게시물 출력 메소드 [ 인수 : 게시물 번호 ]
 	public Board getboard(int bnum) {
 		try {
@@ -50,7 +74,7 @@ public class BoardDao extends Dao {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			if(rs.next()) {
-				String mid = memberDao.getmid(rs.getInt(4));
+				String mid = MemberDao.memberDao.getmid(rs.getInt(4));
 				Board board = new Board(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getString(6), rs.getString(7), mid);
 				return board;
 			}
@@ -115,4 +139,16 @@ public class BoardDao extends Dao {
 	
 	// 10. 댓글 삭제 메소드	[ 인수 : 삭제할 댓글 번호 ]
 	public boolean replydelete() {return false;}
+	
+	// 11. 파일 삭제 메소드
+	public boolean filedelete(int bnum) {
+		try {
+			String sql = "update board set bfile=null where bnum="+bnum;
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			return true;
+		}catch(Exception e) {System.out.println("파일 삭제 오류 : "+e);}
+		return false;
+	}
+	
 }

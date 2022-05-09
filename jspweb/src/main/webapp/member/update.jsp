@@ -139,8 +139,14 @@
 							</div>
 						
 						</div>
-						<input class="btn btn-primary" type="submit" value="변경적용">
-						<a href="/jspweb/member/update.jsp"><button class="btn btn-primary" type="button">변경취소</button></a>
+						<div class="row">
+							<div id="btnupdate" style="display: none;" class="col-md-3">
+								<input class="btn btn-primary"  type="submit" value="변경적용">
+							</div>
+							<div class="col-md-3">
+								<a href="/jspweb/member/update.jsp"><button class="btn btn-primary" type="button">변경취소</button></a>
+							</div>
+						</div>
 					</form>
 				</div>
 			</div>

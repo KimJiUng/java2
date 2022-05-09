@@ -12,5 +12,23 @@ $(document).ready(function(){
 	
 });
 
-
+function filedelete(bnum){
+	
+	// HTML 에서 JS 로 변수 이동
+		// 1. 메소드 인수로 이동
+		// 2. 태그의 value 혹은 html 이동
+	
+	$.ajax({
+		url : "../board/Filedelete" ,	// 서블릿 통신
+		data : {"bnum" : bnum},
+		success : function(result){
+			if(result==1){
+				alert("첨부파일 삭제 성공");
+				location.reload(); // 현재 페이지 새로고침
+			}else{
+				alert("첨부파일 삭제 실패[관리자에게 문의]");
+			}
+		}
+	});
+}
 

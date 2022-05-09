@@ -1,54 +1,50 @@
 package controller.board;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import dao.BoardDao;
-import dao.MemberDao;
 import dto.Board;
-import dto.Member;
+
 
 /**
- * Servlet implementation class Write
+ * Servlet implementation class Update
  */
-@WebServlet("/board/Write")
-public class Write extends HttpServlet {
+@WebServlet(name = "Bupdate", urlPatterns = { "/board/Update" })
+public class Update extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-    public Write() {
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Update() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			Date time = new Date();
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Instant now = Instant.now();
 		response.setContentType("text/html; charset=UTF-8");	// 응답 파일타입 = HTML
 		PrintWriter out = response.getWriter();	// HTML 내보내기 메소드 사용
 		// 저장 경로 [ \ : 제어문자 -> 경로 사용시 \\ , / ]
@@ -66,10 +62,8 @@ public class Write extends HttpServlet {
 				"UTF-8", 		// 인코딩타입
 				new DefaultFileRenamePolicy() );	// 동일한 파일명이 있을경우 자동 이름 변환
 		
-		HttpSession session = request.getSession();
-		String mid = (String)session.getAttribute("loginid");
-		Member member = MemberDao.memberDao.getmember(mid);
 		String btitle = multi.getParameter("btitle");
+		int bnum = Integer.parseInt(request.getParameter("bnum"));
 		if(btitle.length()<1) {
 			out.println("<script>");
 			out.println("alert('제목을 입력해주세요.');");
@@ -79,37 +73,25 @@ public class Write extends HttpServlet {
 		}
 		String bcontent = multi.getParameter("bcontent");
 		String bfile = multi.getFilesystemName("bfile");
-		int mnum = member.getMnum();
-		Board board = new Board(0, btitle, bcontent, mnum, 0, null, bfile, mid);
-		ArrayList<Board> blist = BoardDao.boardDao.getboardlist();
-		for(Board temp : blist) {
-			if(temp.getMid().equals(mid)) {
-				Date writetime = format.parse(temp.getBdate());
-				System.out.println(writetime);
-				System.out.println(now);
-				if(writetime.toInstant().until(now, ChronoUnit.MINUTES)<10) {
-					System.out.println(writetime.toInstant().until(now, ChronoUnit.MINUTES));
-					out.println("<script>");
-					out.println("alert('5분안에 새로운 글 작성은 불가능합니다.');");
-					out.println("history.back();");
-					out.println("</script>");
-					return;
-				}
-			}
-		}
-	
 		
-		boolean result = BoardDao.boardDao.write(board);
+		// 기존 파일
+		Board board2 = BoardDao.boardDao.getboard(bnum);
+		String oldfile = board2.getBfile();
+		if(bfile==null) { // 새로운 첨부파일이 없다.
+			bfile = oldfile;
+		}else { // 새로운 첨부파일이 있다.
+			String fileuploadpath = request.getSession().getServletContext().getRealPath("/board/upload/"+oldfile);
+			File file = new File(fileuploadpath);
+			file.delete();	// 파일 삭제하기 (file 클래스내 제공되는 delete() 메소드 = 파일 삭제시 사용)
+		}
+		Board board = new Board(bnum, btitle, bcontent, 0, 0, null, bfile, null);
+		boolean result = BoardDao.boardDao.update(board);
 		if(result) {
-			response.sendRedirect("/jspweb/board/boardlist.jsp");
+			response.sendRedirect("/jspweb/board/boardview.jsp?bnum="+bnum);
 		}else {
-			response.sendRedirect("/jspweb/board/boardwrite.jsp?result=2");
+			response.sendRedirect("/jspweb/board/boardwrite.jsp?bnum="+bnum+"&update=1");
 		}
 		doGet(request, response);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

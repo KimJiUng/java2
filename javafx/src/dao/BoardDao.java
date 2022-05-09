@@ -20,28 +20,28 @@ import javafx.collections.ObservableList;
 
 public class BoardDao {
 	
-	// ÇÊµå
-	private Connection con; // DB ¿¬°á Å¬·¡½º
-	private PreparedStatement ps; // ¿¬°áµÈ DB³» SQL Á¶ÀÛ
-	private ResultSet rs; // SQL °á°ú ·¹ÄÚµå °¡Á®¿À±â
+	// ï¿½Êµï¿½
+	private Connection con; // DB ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
+	private PreparedStatement ps; // ï¿½ï¿½ï¿½ï¿½ï¿½ DBï¿½ï¿½ SQL ï¿½ï¿½ï¿½ï¿½
+	private ResultSet rs; // SQL ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	
 	public static BoardDao boardDao = new BoardDao();
 	
 	public ArrayList<String> viewlist = new ArrayList<>();
 	
-	// »ý¼ºÀÚ
-	public BoardDao() { // »ý¼ºÀÚ¿¡¼­ ¿¬µ¿ÇÏ´Â ÀÌÀ¯ : °´Ã¼ »ý¼º½Ã ¹Ù·Î DB¿Í ¿¬µ¿ÇÏ±â À§ÇØ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	public BoardDao() { // ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/javafx?serverTimezone=UTC","root","1234");
 			
 		} catch(Exception e) {
-			System.out.println("(BoardDao)DB ¿¬µ¿ ½ÇÆÐ : "+e);
+			System.out.println("(BoardDao)DB ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : "+e);
 		}
 	}
 	
-	// ¸Þ¼Òµå
-		// 1. ±Û¾²±â ¸Þ¼Òµå
+	// ï¿½Þ¼Òµï¿½
+		// 1. ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½
 	public boolean write(Board board) {
 		try {
 			String sql = "insert into board(btitle, bcontent,bwrite,mnum) values(?,?,?,?)";
@@ -53,23 +53,23 @@ public class BoardDao {
 			ps.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			System.out.println("±Û¾²±â SQL ¿À·ù : "+e);
+			System.out.println("ï¿½Û¾ï¿½ï¿½ï¿½ SQL ï¿½ï¿½ï¿½ï¿½ : "+e);
 		}
 		return false;
 	}
 	
-		// 2. ¸ðµç ±Û È£Ãâ ¸Þ¼Òµå
+		// 2. ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½ ï¿½Þ¼Òµï¿½
 	public ObservableList<Board> list() {
 		try {
 			ObservableList<Board> boardlist = FXCollections.observableArrayList();
 			String sql = "select * from board order by bnum desc";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
-				// rs : °Ë»ö°á°úÀÇ ·¹ÄÚµå¸¦ ÇÏ³ª¾¿ ¼øÈ¯ 
-					// rs.next() : °Ë»ö°á°úÀÇ ´ÙÀ½ ·¹ÄÚµå
-					// rs.getÀÚ·áÇü(ÇØ´çÇÊµå¼ø¼­¹øÈ£) : Çö ·¹ÄÚµå¿¡¼­ ÇØ´ç ÇÊµåÀÇ µ¥ÀÌÅÍ °¡Á®¿À±â
-			while(rs.next()) { // ´ÙÀ½ ·¹ÄÚµå°¡ ¾øÀ»¶§±îÁö ¹Ýº¹
-				// °´Ã¼È­
+				// rs : ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµå¸¦ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ 
+					// rs.next() : ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½
+					// rs.getï¿½Ú·ï¿½ï¿½ï¿½(ï¿½Ø´ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£) : ï¿½ï¿½ ï¿½ï¿½ï¿½Úµå¿¡ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			while(rs.next()) { // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ýºï¿½
+				// ï¿½ï¿½Ã¼È­
 				
 				Board board = new Board(rs.getInt(1), 
 						rs.getString(2), 
@@ -78,17 +78,17 @@ public class BoardDao {
 						rs.getString(5), 
 						rs.getInt(6),
 						rs.getInt(7));
-				// ¸®½ºÆ®¿¡ Ãß°¡
+				// ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ß°ï¿½
 				boardlist.add(board);
 			}
-			return boardlist; // ¼º°ø½Ã ¸®½ºÆ® ¹ÝÈ¯
+			return boardlist; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¯
 		} catch(Exception e){
-			System.out.println("È£Ãâ SQL ¿À·ù : "+e);
+			System.out.println("È£ï¿½ï¿½ SQL ï¿½ï¿½ï¿½ï¿½ : "+e);
 		}
-		return null; // ½ÇÆÐ½Ã null
+		return null; // ï¿½ï¿½ï¿½Ð½ï¿½ null
 	}
 	
-		// 3. ±Û »èÁ¦ ¸Þ¼Òµå
+		// 3. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½
 	public boolean delete(int bnum) {
 		try {
 			String sql = "delete from board where bnum=?";
@@ -103,12 +103,12 @@ public class BoardDao {
 			
 			return true;
 		} catch(Exception e) {
-			System.out.println("±Û»èÁ¦ SQL ¿À·ù : "+e);
+			System.out.println("ï¿½Û»ï¿½ï¿½ï¿½ SQL ï¿½ï¿½ï¿½ï¿½ : "+e);
 		}
 		return false;
 	}
 	
-		// 4. ±Û ¼öÁ¤ ¸Þ¼Òµå
+		// 4. ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½
 	public boolean update(int bnum, String title, String content) {
 		try {
 			String sql = "update board set btitle=?, bcontent=? where bnum=?";
@@ -119,12 +119,12 @@ public class BoardDao {
 			ps.executeUpdate();
 			return true;
 		} catch(Exception e) {
-			System.out.println("±Û ¼öÁ¤ SQL ¿À·ù : "+e);
+			System.out.println("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ SQL ï¿½ï¿½ï¿½ï¿½ : "+e);
 		}
 		return false;
 	}
 	
-		// 5. Á¶È¸¼ö Áõ°¡ ¸Þ¼Òµå
+		// 5. ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½
 	public boolean viewplus() {
 		try {
 			load();
@@ -153,46 +153,46 @@ public class BoardDao {
 			
 			return true;
 		} catch(Exception e) {
-			System.out.println("Á¶È¸¼ö SQL ¿À·ù : "+e);
+			System.out.println("ï¿½ï¿½È¸ï¿½ï¿½ SQL ï¿½ï¿½ï¿½ï¿½ : "+e);
 		}
 		return false;
 	}
 	
 	public String i;
-	// ÆÄÀÏ ÀúÀå
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void save() {
 			
 		try {
-			FileOutputStream outputStream = new FileOutputStream("D:/java/Á¶È¸¼ö.txt", true);
+			FileOutputStream outputStream = new FileOutputStream("D:/java/ï¿½ï¿½È¸ï¿½ï¿½.txt", true);
 			String a = i+"\n";
 			outputStream.write(a.getBytes());
 			
 		}catch(Exception e) {
-			System.out.println("¾Ë¸²)) ÆÄÀÏ ÀúÀå ½ÇÆÐ(°ü¸®ÀÚ¿¡°Ô ¹®ÀÇ)");
+			System.out.println("ï¿½Ë¸ï¿½)) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)");
 		}
 	}
-	// ÆÄÀÏ ºÒ·¯¿À±â
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void load() {
 		try {
-			FileInputStream fileInputStream = new FileInputStream("D:/java/Á¶È¸¼ö.txt");
+			FileInputStream fileInputStream = new FileInputStream("D:/java/ï¿½ï¿½È¸ï¿½ï¿½.txt");
 			byte[] bytes = new byte[1024];
 			fileInputStream.read(bytes);
 			String file = new String(bytes);
 			String[] view = file.split("\n");
 			
-			int i=0; // ÀÎµ¦½º¿ë
+			int i=0; // ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½
 			for(String temp : view) { 
 				if(i+1==view.length) break;			
 				viewlist.add(temp);
-				i++; // ÀÎµ¦½º Áõ°¡
+				i++; // ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			}
 			
 		} catch(Exception e) {
-			System.out.println("¾Ë¸²)) ÆÄÀÏ ·Îµå ½ÇÆÐ(°ü¸®ÀÚ¿¡°Ô ¹®ÀÇ)");
+			System.out.println("ï¿½Ë¸ï¿½)) ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)");
 		}
 	}
 	
-	// 6. ³¯Â¥º° °Ô½Ã¹° ¼ö ¹ÝÈ¯
+	// 6. ï¿½ï¿½Â¥ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯
 	public Map<String, Integer> datetotal(String table){
 		try {
 			Map<String, Integer> map = new HashMap<>();
@@ -206,7 +206,7 @@ public class BoardDao {
 			}
 			return map;
 		}catch(Exception e) {
-			System.out.println("³¯Â¥º° °Ô½Ã¹° ¼ö ¹ÝÈ¯ ¿À·ù : "+ e);
+			System.out.println("ï¿½ï¿½Â¥ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ : "+ e);
 		}
 		return null;
 	}
