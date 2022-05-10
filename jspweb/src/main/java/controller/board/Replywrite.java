@@ -48,6 +48,10 @@ public class Replywrite extends HttpServlet {
 				}else {
 					int bnum = Integer.parseInt(request.getParameter("bnum"));
 					String rcontent = request.getParameter("rcontent");
+					if(rcontent.contains("<script>")) {
+						response.getWriter().print(6);
+						return;
+					}
 					String loginid = (String)session.getAttribute("loginid");
 					int mnum = MemberDao.memberDao.getmember(loginid).getMnum();
 					ArrayList<Reply> midreplylist = ReplyDao.replyDao.getmidreply(mnum);

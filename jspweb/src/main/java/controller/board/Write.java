@@ -85,6 +85,13 @@ public class Write extends HttpServlet {
 			return;
 		}
 		String bcontent = multi.getParameter("bcontent");
+		if(bcontent.contains("window.alert")) {
+			out.println("<script>");
+			out.println("alert('테러하지 마세요.');");
+			out.println("history.back();");	// js [history.back() : 이전 페이지로 가기 메소드 ]
+			out.println("</script>");
+			return;
+		}
 		String bfile = multi.getFilesystemName("bfile");
 		int mnum = member.getMnum();
 		Board board = new Board(0, btitle, bcontent, mnum, 0, null, bfile, mid);

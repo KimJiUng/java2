@@ -51,6 +51,10 @@ public class Rereplywrite extends HttpServlet {
 					int rindex = Integer.parseInt(request.getParameter("rnum"));
 					int bnum = Integer.parseInt(request.getParameter("bnum"));
 					String rercontent = request.getParameter("rercontent");
+					if(rercontent.contains("<script>")) {
+						response.getWriter().print(6);
+						return;
+					}
 					String loginid = (String)session.getAttribute("loginid");
 					int mnum = MemberDao.memberDao.getmember(loginid).getMnum();
 					ArrayList<Reply> midreplylist = ReplyDao.replyDao.getmidreply(mnum);

@@ -71,7 +71,21 @@ public class Update extends HttpServlet {
 			out.println("</script>");
 			return;
 		}
+		if(btitle.contains("<script>")) {
+			out.println("<script>");
+			out.println("alert('테러하지 마세요.');");
+			out.println("history.back();");	// js [history.back() : 이전 페이지로 가기 메소드 ]
+			out.println("</script>");
+			return;
+		}
 		String bcontent = multi.getParameter("bcontent");
+		if(bcontent.contains("window.alert")) {
+			out.println("<script>");
+			out.println("alert('테러하지 마세요.');");
+			out.println("history.back();");	// js [history.back() : 이전 페이지로 가기 메소드 ]
+			out.println("</script>");
+			return;
+		}
 		String bfile = multi.getFilesystemName("bfile");
 		
 		// 기존 파일

@@ -49,6 +49,10 @@ public class Replyupdate extends HttpServlet {
 				}else {
 					int rnum = Integer.parseInt(request.getParameter("rnum"));
 					String reupdatecontent = request.getParameter("reupdatecontent");
+					if(reupdatecontent.contains("<script>")) {
+						response.getWriter().print(6);
+						return;
+					}
 					String loginid = (String)session.getAttribute("loginid");
 					int mnum = MemberDao.memberDao.getmember(loginid).getMnum();
 					ArrayList<Reply> midreplylist = ReplyDao.replyDao.getmidreply(mnum);
