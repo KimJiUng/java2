@@ -46,7 +46,7 @@ public class Write extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			Date time = new Date();
+
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Instant now = Instant.now();
 		response.setContentType("text/html; charset=UTF-8");	// 응답 파일타입 = HTML
@@ -77,18 +77,23 @@ public class Write extends HttpServlet {
 			out.println("</script>");
 			return;
 		}
+		if(btitle.contains("<script>")) {
+			out.println("<script>");
+			out.println("alert('테러하지 마세요.');");
+			out.println("history.back();");	// js [history.back() : 이전 페이지로 가기 메소드 ]
+			out.println("</script>");
+			return;
+		}
 		String bcontent = multi.getParameter("bcontent");
 		String bfile = multi.getFilesystemName("bfile");
 		int mnum = member.getMnum();
 		Board board = new Board(0, btitle, bcontent, mnum, 0, null, bfile, mid);
 		ArrayList<Board> blist = BoardDao.boardDao.getboardlist();
 		for(Board temp : blist) {
-			if(temp.getMid().equals(mid)) {
+			if(temp.getMid()!=null && temp.getMid().equals(mid)) {
 				Date writetime = format.parse(temp.getBdate());
-				System.out.println(writetime);
-				System.out.println(now);
-				if(writetime.toInstant().until(now, ChronoUnit.MINUTES)<10) {
-					System.out.println(writetime.toInstant().until(now, ChronoUnit.MINUTES));
+				if(Math.abs(writetime.toInstant().until(now, ChronoUnit.MINUTES))<5) {
+					System.out.println(Math.abs(writetime.toInstant().until(now, ChronoUnit.MINUTES)));
 					out.println("<script>");
 					out.println("alert('5분안에 새로운 글 작성은 불가능합니다.');");
 					out.println("history.back();");

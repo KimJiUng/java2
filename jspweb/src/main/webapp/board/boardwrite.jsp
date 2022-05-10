@@ -40,6 +40,7 @@
 		</div>
 		<a href="boardlist.jsp">목록보기</a>
 		<br><br>
+		
 		<%if(update==1){%>
 			<%int bnum = Integer.parseInt(request.getParameter("bnum"));
 			Board board = BoardDao.boardDao.getboard(bnum); %>

@@ -37,11 +37,12 @@ public class Bdelete extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");	// 응답 파일타입 = HTML
 		PrintWriter out = response.getWriter();	// HTML 내보내기 메소드 사용
 		if(result) {
-			
+			System.out.println("fdafdsfdsa");
 			String bfile = board.getBfile();
 			if(bfile==null) {
 				
 			}else {
+				
 				// 삭제 성공시 해당 파일도 서버에서 지우기
 				String uploadpath = request.getSession().getServletContext().getRealPath("/board/upload/"+bfile);
 				File file = new File(uploadpath);
@@ -51,12 +52,13 @@ public class Bdelete extends HttpServlet {
 //				out.println("<body>");
 //				out.println("</body>");
 //				out.println("</html>");
-				// 2. JS 내보내기
-				out.println("<script>");
-				out.println("alert('해당 게시물이 삭제 되었습니다.');");
-				out.println("location.href='boardlist.jsp'");
-				out.println("</script>");	
+					
 			}
+			// 2. JS 내보내기
+			out.println("<script>");
+			out.println("alert('해당 게시물이 삭제 되었습니다.');");
+			out.println("location.href='boardlist.jsp'");
+			out.println("</script>");	
 	
 
 		}else {

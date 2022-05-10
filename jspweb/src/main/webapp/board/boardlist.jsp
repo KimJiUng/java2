@@ -1,3 +1,5 @@
+<%@page import="dto.Reply"%>
+<%@page import="dao.ReplyDao"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="dao.MemberDao"%>
@@ -41,7 +43,20 @@
 			</tr>
 			<!-- for문 -->
 			<%for(Board temp : boardlist) {%>
+				<%ArrayList<Reply> replylist = ReplyDao.replyDao.getreply(temp.getBnum());
 				
+				int i=0;
+				for(Reply reply : replylist){
+					ArrayList<Reply> rereplylist = ReplyDao.replyDao.getrereply(temp.getBnum(),reply.getRnum());
+					for(Reply rereply : rereplylist){
+						if(!rereply.getRcontent().equals("삭제된 댓글 입니다.")){
+							i++;	
+						}	
+					}
+					if(!reply.getRcontent().equals("삭제된 댓글 입니다.")){
+						i++;	
+					}
+				}%>
 				<!-- 
 					행을 클릭했을때 [ js ]
 						<tr onclick="location.href='boardview.jsp'">
@@ -52,7 +67,13 @@
 				 -->
 				<tr onclick="location.href='boardview.jsp?bnum=<%=temp.getBnum() %>'">
 					<td><%=temp.getBnum() %></td>
-					<td><%=temp.getBtitle() %></a></td>
+					<td><%=temp.getBtitle() %>
+					<%if(i!=0) {%>
+						<span class="board-replycount">
+						<%=i %>
+						</span>
+					<%} %>
+					</td>
 					<td><%=MemberDao.memberDao.getmid(temp.getMnum()) %></td>
 					<td><%=temp.getBview() %></td>
 					<% if(today.equals(temp.getBdate().split(" ")[0])) { %>
