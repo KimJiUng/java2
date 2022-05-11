@@ -11,9 +11,10 @@
 	<% String mid = (String)session.getAttribute("loginid"); %>
 	
 	<%@include file="../header.jsp" %>
+	<div class="container">
 	<%if(loginid==null){ %>
 	
-	<div class="container">
+	
 	로그인 이후 이용 가능
 	<%} else{%>
 		<div class="row">
@@ -23,7 +24,7 @@
 			<div class="col-md-9">
 				<div class="col-md-2 offset-3">
 					<div class="text-center">
-						<h3>회원탈퇴</h3>
+						<h4 class="boardlist-title">회원탈퇴</h4>
 					</div>
 						<div class="my-3">
 							<input type="password" class="form-control" id="mpassword" name="mpassword" placeholder="비밀번호 확인">

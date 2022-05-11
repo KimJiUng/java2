@@ -18,10 +18,9 @@
 		Member member = MemberDao.memberDao.getmember(mid);
 	%>
 	
-	
-	<%if(loginid==null){ %>
-	
 	<div class="container">
+	<%if(loginid==null){ %>
+
 	로그인 이후 이용 가능
 	<%} else{%>
 		<div class="row">
@@ -38,7 +37,7 @@
 						비밀번호 수정 실패! 기존 비밀번호가 다릅니다.
 					<%} %>
 					<div class="text-center">
-						<h3>회원수정</h3>
+						<h4 class="boardlist-title">회원 정보 수정</h4>
 					</div>
 					<form action="../Update" method="post">
 						<input type="hidden" value="<%=member.getMnum()%>" name="mnum">

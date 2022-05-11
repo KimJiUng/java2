@@ -7,6 +7,7 @@
 <body>
 	<br><br><br>
 	<div class="container">
+		<br><br><br><br><br><br><br>
 		푸터페이지
 	</div>
 </body>

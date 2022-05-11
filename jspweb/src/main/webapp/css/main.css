@@ -92,3 +92,27 @@ textarea{
 	padding: 2px 5px 2px 5px;
 	border-radius: 20px;
 }
+
+.boardlist-title{
+	width : 20%;
+	border-bottom: solid 1px black;
+	padding: 20px;
+	margin: 100px 0px 50px 0px;
+}
+
+.boardlist-topbtn{
+	margin: 20px 0px;
+	
+}
+
+.boardlist-write{
+	font-size: 13px;
+}
+
+.pagenum{
+	color: black;
+	font-size: 13px;
+}
+
+
+

@@ -43,7 +43,8 @@
 									<li><a class="hearder-topmenu" href="/jspweb/member/myshopping.jsp">나의쇼핑</a></li>
 									<li><a class="hearder-topmenu" href="/jspweb/Logout">로그아웃</a></li>
 								<%} %>
-								<li><a class="hearder-topmenu" href="/jspweb/board/boardlist.jsp">자유게시판</a></li>
+								<li><a class="hearder-topmenu" href="/jspweb/board/boardlist.jsp?key=&keyword=">자유게시판</a></li>
+								<li><a class="hearder-topmenu" href="/jspweb/board/chatting.jsp">채팅방</a></li>
 							</ul>
 						</div>
 					</div>

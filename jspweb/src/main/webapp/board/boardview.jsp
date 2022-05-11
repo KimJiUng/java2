@@ -128,6 +128,8 @@
 				<tr id="rereply">
 					<td></td>
 					<td colspan="2" id=<%=temp.getRnum() %>></td>
+					<td></td>
+					
 				</tr>
 				<!-- 대댓글 출력창 -->
 				<%ArrayList<Reply> replylist2 = ReplyDao.replyDao.getrereply(bnum,temp.getRnum());
@@ -152,6 +154,8 @@
 					<tr id="rereply">
 						<td></td>
 						<td colspan="2" id=<%=temp2.getRnum() %>></td>
+						<td></td>
+						
 					</tr>
 				<%} %>
 			<%} %>

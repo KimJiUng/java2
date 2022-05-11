@@ -30,10 +30,28 @@ public class BoardDao extends Dao {
 	}
 	
 	// 2. 모든 게시물 출력 메소드
-	public ArrayList<Board> getboardlist() {
+	public ArrayList<Board> getboardlist(int startrow, int listsize, String key, String keyword ) {
 		try {
 			ArrayList<Board> boardlist = new ArrayList<Board>();
-			String sql = "select * from board order by bnum desc";
+			String sql;
+			
+			// 만약에 작성자 검색일 경우
+			if(key.equals("mid")) {
+				key = "mnum";
+				if(MemberDao.memberDao.getmember(keyword)==null) {
+					keyword = "";
+				}else {
+					keyword = MemberDao.memberDao.getmember(keyword).getMnum()+"";
+				}
+				
+			}
+			
+			// 검색이 없을 경우
+			if(keyword==null || keyword.equals("")) {
+				sql = "select * from board order by bnum desc limit "+startrow+","+listsize;
+			}else { // 검색이 있을 경우
+				sql = "select * from board where "+key+" like '%"+keyword+"%' order by bnum desc limit "+startrow+","+listsize;
+			}
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()) {
@@ -46,26 +64,35 @@ public class BoardDao extends Dao {
 		return null;
 	}
 	
-	// 2-2. 게시물 10개씩 출력 메소드
-	public ArrayList<Board> getboardlist10(){
-		try {
-			int bcount = count();
-			String sql = "select * from board order by bnum desc limit 10 offset ?";
-			ps = con.prepareStatement(sql);
-			ps.setInt(1, bcount);
-		} catch(Exception e) {System.out.println("게시물10개 출력 오류 : "+e);}
-		return null;
-	}
+	// 2-2. 모든 게시물 개수 출력 메소드
+		public int gettotalrow(String key, String keyword){
+			try {
+				// 만약에 작성자 검색일 경우
+				if(key.equals("mid")) {
+					key = "mnum";
+					if(MemberDao.memberDao.getmember(keyword)==null) {
+						keyword = "";
+					}else {
+						keyword = MemberDao.memberDao.getmember(keyword).getMnum()+"";
+					}
+					
+				}
+				String sql;
+				if(keyword==null || keyword.equals("")) {
+					sql = "select count(*) from board";
+				}else {
+					sql = "select count(*) from board where "+key+" like '%"+keyword+"%'";
+				}
+				ps = con.prepareStatement(sql);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					return rs.getInt(1);
+				}
+			}catch(Exception e) {System.out.println("게시물 개수 출력 오류 : "+e);}
+			return 0;
+		}
 	
-	public int count() {
-      try {
-         String sql = "select count(bnum) from board";
-         ps = con.prepareStatement(sql);
-         rs = ps.executeQuery();
-         if(rs.next()) {return rs.getInt(1);}
-      }catch(Exception e) {System.out.println("count error : "+e);}
-      return 0;
-   }
+	
 	
 	// 3. 개별 게시물 출력 메소드 [ 인수 : 게시물 번호 ]
 	public Board getboard(int bnum) {
@@ -108,6 +135,17 @@ public class BoardDao extends Dao {
 		return false;
 	}
 	
+	// 5-2. 파일 삭제 메소드
+	public boolean filedelete(int bnum) {
+		try {
+			String sql = "update board set bfile=null where bnum="+bnum;
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			return true;
+		}catch(Exception e) {System.out.println("파일 삭제 오류 : "+e);}
+		return false;
+	}
+	
 	// 6. 게시물 조회 증가 메소드
 	public boolean increview(int bnum) {
 		try {
@@ -127,28 +165,12 @@ public class BoardDao extends Dao {
 		}catch(Exception e) {System.out.println("조회수 증가 오류 : "+e); }
 		return false;
 	}
+
+
 	
-	// 7. 댓글 작성 메소드	[ 인수 : 작성된 데이터들 = dto ]
-	public boolean replywrite() {return false;}
 	
-	// 8. 댓글 출력 메소드	[ 인수 : x ]
-	public boolean replylist() {return false;}
 	
-	// 9. 댓글 수정 메소드	[ 인수 : 수정할 댓글번호 ]
-	public boolean replyupdate() {return false;}
-	
-	// 10. 댓글 삭제 메소드	[ 인수 : 삭제할 댓글 번호 ]
-	public boolean replydelete() {return false;}
-	
-	// 11. 파일 삭제 메소드
-	public boolean filedelete(int bnum) {
-		try {
-			String sql = "update board set bfile=null where bnum="+bnum;
-			ps = con.prepareStatement(sql);
-			ps.executeUpdate();
-			return true;
-		}catch(Exception e) {System.out.println("파일 삭제 오류 : "+e);}
-		return false;
-	}
+	// = [같다] : 모두 동일한 데이터 검색
+	// like 
 	
 }

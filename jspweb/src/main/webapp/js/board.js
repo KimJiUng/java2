@@ -29,6 +29,7 @@ function filedelete(bnum){
 				alert("첨부파일 삭제 실패[관리자에게 문의]");
 			}
 		}
+		
 	});
 }
 
@@ -48,7 +49,7 @@ function replywrite(bnum){
 			else if(result==3){alert("댓글 내용을 입력해주세요.");}
 			else if(result==4){alert("로그인해야 댓글 작성이 가능합니다.");}
 			else if(result==5){alert("10초안에 새로운 댓글 작성은 불가능합니다.");}
-			else if(result==6){alert("테러는 불가능합니다.");}
+			else if(result==6){alert("댓글에 스크립트 사용은 불가능합니다.");}
 		}
 	});
 }
@@ -91,7 +92,7 @@ function rereplywrite(rnum,bnum){
 			else if(result==3){alert("댓글 내용을 입력해주세요.");}
 			else if(result==4){alert("로그인해야 댓글 작성이 가능합니다.");}
 			else if(result==5){alert("10초안에 새로운 댓글 작성은 불가능합니다.");}
-			else if(result==6){alert("테러는 불가능합니다.");}
+			else if(result==6){alert("댓글에 스크립트 사용은 불가능합니다.");}
 		}
 	});
 	
@@ -146,7 +147,7 @@ function replyupdate(rnum){
 			else if(result==3){alert("댓글 내용을 입력해주세요.");}
 			else if(result==4){alert("로그인해야 댓글 작성이 가능합니다.");}
 			else if(result==5){alert("10초안에 새로운 댓글 작성은 불가능합니다.");}
-			else if(result==6){alert("테러는 불가능합니다.");}
+			else if(result==6){alert("댓글에 스크립트 사용은 불가능합니다.");}
 		}
 	});
 }

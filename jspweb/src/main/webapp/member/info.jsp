@@ -10,9 +10,8 @@
 </head>
 <body>
 	<%@include file="../header.jsp" %>
-	<%if(loginid==null){ %>
-	
 	<div class="container">
+	<%if(loginid==null){ %>
 	로그인 이후 이용 가능
 	<%} else{%>
 		<div class="row">
@@ -22,7 +21,7 @@
 			<div class="col-md-9">
 				<div class="col-md-4 offset-2">
 					<div class="text-center">
-						<h3>회원정보</h3>
+						<h4 class="boardlist-title">회원정보</h4>
 					</div>
 					<%
 						// 1. 세션 호출 [회원id 저장]

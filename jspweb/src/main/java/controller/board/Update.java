@@ -73,7 +73,7 @@ public class Update extends HttpServlet {
 		}
 		if(btitle.contains("<script>")) {
 			out.println("<script>");
-			out.println("alert('테러하지 마세요.');");
+			out.println("alert('제목에 스크립트 사용은 불가능합니다.');");
 			out.println("history.back();");	// js [history.back() : 이전 페이지로 가기 메소드 ]
 			out.println("</script>");
 			return;
