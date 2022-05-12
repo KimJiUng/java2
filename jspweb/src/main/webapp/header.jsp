@@ -37,6 +37,8 @@
 								<%if(loginid==null){ %>
 									<li><a class="hearder-topmenu" href="/jspweb/member/login.jsp">로그인</a></li>
 									<li><a class="hearder-topmenu" href="/jspweb/member/signup.jsp">회원가입</a></li>
+								<%} else if(loginid.equals("admin")){ %>
+									<li><a class="hearder-topmenu" href="/jspweb/admin/dashboard.jsp">관리자</a></li>
 								<%} else{ %>
 									<li><span class="hearder-toploginid"><%=loginid %>님</span></li>
 									<li><a class="hearder-topmenu" href="/jspweb/member/info.jsp">회원정보</a></li>

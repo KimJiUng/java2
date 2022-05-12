@@ -56,15 +56,15 @@
 					<input type="submit" value="등록"><input type="reset" value="취소">
 				</form>
 			<%}else{ %>
-		<form action="../board/Write" method="post" enctype="multipart/form-data">
-			<!-- form 전송 인코딩 타입 : 기본타입은 첨부파일 불가능 -->
-			<!-- form 첨부파일 전송 인코딩 타입 : multipart/form-data -->
-			제목 : <input type="text" name="btitle"><br>
-			내용 : <textarea name="bcontent" id="summernote"></textarea><br>
-			첨부파일 :<input type="file" name="bfile" id="bfile"> 
-			<input type="submit" value="등록"><input type="reset" value="취소">
-		</form>
-		<%} %>
+				<form action="../board/Write" method="post" enctype="multipart/form-data">
+					<!-- form 전송 인코딩 타입 : 기본타입은 첨부파일 불가능 -->
+					<!-- form 첨부파일 전송 인코딩 타입 : multipart/form-data -->
+					제목 : <input type="text" name="btitle"><br>
+					내용 : <textarea name="bcontent" id="summernote"></textarea><br>
+					첨부파일 :<input type="file" name="bfile" id="bfile"> 
+					<input type="submit" value="등록"><input type="reset" value="취소">
+				</form>
+			<%} %>
 	</div>
 	<%} %>
 	<!-- 썸머노트 js cdn -->

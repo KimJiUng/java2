@@ -52,7 +52,8 @@
 			}
 		
 		// 3. 페이지당 화면에 표시할 게시물 개수
-		int listsize = 5;	// 추후에 사용자에게 입력을 받기
+		System.out.print(session.getAttribute("list"));
+		int listsize = 10;	// 추후에 사용자에게 입력을 받기
 		
 		// 4. 페이지당 게시물의 시작 번호
 		int startrow = (currentpage-1)*listsize;
@@ -64,7 +65,7 @@
 			lastpage = (totalrow/listsize)+1;
 		}
 		// 5. 페이지 버튼 표시할 개수
-		int pagesize = 5;
+		int pagesize = 10;
 		// 6. 페이지 버튼 시작 번호
 		int startbtn = ((currentpage-1)/pagesize)*pagesize+1;
 		// 7. 페이지 버튼 끝 번호
@@ -87,7 +88,14 @@
 	<div class="container">
 		<h4 class="boardlist-title">자유게시판</h4>
 		<div class="row boardlist-topbtn">
-			<div class="col-md-1 offset-10">
+			<div class="col-md-1">
+				<select name="list">
+					<option selected="selected" value="10">10개씩 출력</option>
+					<option value="20">20개씩 출력</option>
+					<option value="30">30개씩 출력</option>
+				</select>
+			</div>
+			<div class="col-md-1 offset-9">
 				<a href="boardlist.jsp?key=&keyword="><button class="form-control">전체글</button></a>
 			</div>
 			<div class="col-md-1">
