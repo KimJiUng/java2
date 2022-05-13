@@ -58,14 +58,14 @@ let a = false;
 function rereplyview(rnum,bnum){
 	if(a==false){
 		$("#"+rnum).html(
-			'<div class="row">'+
+			
 				'<div class="col-md-10">'+
 					'<textarea class="form-control my-1" rows=3 type="text" id="rercontent"></textarea>'+
 				'</div>'+
 				'<div class="col-md-2">'+
 					'<button class="form-control py-4 my-1" onclick="rereplywrite('+rnum+','+bnum+')">등록</button>'+
-				'</div>'+
-			'</div>'
+				'</div>'
+			
 		);
 		a = true;	
 	}else{

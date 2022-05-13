@@ -2,8 +2,14 @@ let a=false;
 function categorybtn(){
 	if(a==false){
 		$("#categoryinput").html(
-		'<input type="text" id="categoryname">'+
-		'<button onclick="categoryadd()" type="button">등록</button>'
+		'<div class="row">'+
+			'<div class="col-md-7">'+
+				'<input class="form-control" type="text" id="categoryname">'+
+			'</div>'+
+			'<div class="col-md-5">'+
+				'<button class="form-control" onclick="categoryadd()" type="button">등록</button>'+
+			'</div>'+
+		'</div>'
 		);
 		a=true;
 	}else{
@@ -31,12 +37,7 @@ function categoryadd(){
 						success : function(result){
 							if(result==1){
 								alert("카테고리 등록 성공");
-								$.ajax({
-									url : "getcategory",
-									success : function(result){
-										$("#categorybox").html(result);
-									}
-								})
+								getcategory();
 								$("#categoryname").val("");
 							}else{
 								alert("카테고리 등록 실패");
@@ -55,14 +56,18 @@ function categoryadd(){
 	
 }
 
-$(function getcategory(){
+$(function(){
+	getcategory();
+});
+
+function getcategory(){
 	$.ajax({
 		url : "getcategory",
 		success : function(result){
 			$("#categorybox").html(result);
 		}
 	})
-});
+}
 
 
 function productadd(){
@@ -91,3 +96,23 @@ function productadd(){
 		}
 	});
 }
+
+/* 첨부파일이 변경되면 특정태그에 첨부파일 이미지 표시 */
+$("#pimg").change(function(e){
+	// e : change된 객체
+	// e.target : 객체.target() -> html 태그
+	// e.target.files[3] : 객체내 파일
+	
+	// 클라이언트가 업로드시 업로드파일의 경로 알기
+	let reader = new FileReader();
+	reader.readAsDataURL(e.target.files[0]);
+	reader.onload = function(e){
+		$("#preview").attr("src" , e.target.result);
+	}
+	
+	// $("#pimg").val() 사용시
+	// C:\fakepath\토끼.jpg
+	// 클라이언트가 사진을 업로드시 js가 클라이언트의 경로를 알 수가 없다.
+	
+ });
+

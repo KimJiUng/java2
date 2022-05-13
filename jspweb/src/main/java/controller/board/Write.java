@@ -96,8 +96,9 @@ public class Write extends HttpServlet {
 		}
 		String bfile = multi.getFilesystemName("bfile");
 		int mnum = member.getMnum();
+		int totalrow = BoardDao.boardDao.gettotalrow(null, null);
 		Board board = new Board(0, btitle, bcontent, mnum, 0, null, bfile, mid);
-		ArrayList<Board> blist = BoardDao.boardDao.getboardlist();
+		ArrayList<Board> blist = BoardDao.boardDao.getboardlist(0,totalrow,null,null);
 		for(Board temp : blist) {
 			if(temp.getMid()!=null && temp.getMid().equals(mid)) {
 				Date writetime = format.parse(temp.getBdate());

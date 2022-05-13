@@ -113,6 +113,17 @@ public class ProductDao extends Dao {
 		return false;
 	}
 	
+	// 제품 상태 변경 메소드
+	public boolean pactivechange(int pactive, int pnum) {
+		try {
+			String sql = "update product set pactive="+pactive+" where pnum="+pnum;
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			return true;
+		}catch(Exception e) {System.out.println("제품 상태 변경 오류 : "+e);}
+		return false;
+	}
+	
 //////////////////////////////////////////////////////////재고 ////////////////////////////////////////////////////////////////////
 	
 	// 제품의 재고 등록
@@ -168,4 +179,20 @@ public class ProductDao extends Dao {
 		}catch(Exception e) {System.out.println("재고 삭제 실패 오류 : "+e);}
 		return false;
 	}
+	
+	// 제품의 색상별 사이즈 출력
+	public ArrayList<String> getsize(int pnum, String color){
+		try {
+			ArrayList<String> sizelist = new ArrayList<String>();
+			String sql = "SELECT * from product join stock on product.pnum = stock.pnum where stock.pnum="+pnum+" and scolor='"+color+"'";
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				sizelist.add(rs.getString(10));
+			}
+			return sizelist;
+		}catch(Exception e) {System.out.println("사이즈 출력 오류 : "+e);}
+		return null;
+	}
+	
 }

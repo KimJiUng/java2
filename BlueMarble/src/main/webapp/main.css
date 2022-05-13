@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+
+*{
+	margin : 0px;
+	padding : 0px;
+}
+
+.board{
+	height: 75px;
+	border-collapse: collapse;
+}
+
+.gameboard{
+	height: 75px;
+	border-collapse: collapse;
+	border : 1px solid black;
+}
