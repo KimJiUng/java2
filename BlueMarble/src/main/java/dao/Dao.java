@@ -17,7 +17,7 @@ public class Dao {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bluemarble?serverTimezone=UTC","root","1234");
 			
 		} catch(Exception e) {
-			System.out.println("dao ì—°ê²° ì˜¤ë¥˜ : "+e);
+			System.out.println("dao ¿À·ù : "+e);
 		}
 	}
 	

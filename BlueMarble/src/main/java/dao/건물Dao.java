@@ -1,19 +1,18 @@
 package dao;
 
+import dto.건물;
 import dto.게임판;
 
 public class 건물Dao extends Dao {
 
 	public static 건물Dao 건물Dao = new 건물Dao();
-	
-	
 
-	
 	// 1. 도시 정보 출력
 	public 게임판 도시정보출력(int 게임판위치) {
 		try {
-			String sql = "select * from 게임판 where="+게임판위치;
+			String sql = "select * from 게임판 where 게임판위치="+게임판위치;
 			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
 			if(rs.next()) {
 				게임판 게임판 = new 게임판(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9), rs.getInt(10));
 				return 게임판;
@@ -67,13 +66,13 @@ public class 건물Dao extends Dao {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				if(rs.getInt(11)==1) {
+				if(rs.getInt(12)==1) {
 					통행료 += rs.getInt(7);
-				}else if(rs.getInt(11)==2) {
+				}else if(rs.getInt(12)==2) {
 					통행료 += rs.getInt(8);
-				}else if(rs.getInt(11)==3) {
+				}else if(rs.getInt(12)==3) {
 					통행료 += rs.getInt(9);
-				}else if(rs.getInt(11)==4) {
+				}else if(rs.getInt(12)==4) {
 					통행료 += rs.getInt(10);
 				}
 			}
@@ -82,6 +81,18 @@ public class 건물Dao extends Dao {
 		return 0;
 	}
 	
-	
+	// 5. 건물 정보 출력
+	public 건물 getbuilding(int location, int gamenum) {
+		try {
+			String sql = "select * from 건물 where 게임판위치="+location+" and 게임정보번호 ="+gamenum;
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				건물 건물 = new 건물(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5));
+				return 건물;
+			}
+		}catch(Exception e) {System.out.println("건물 정보 출력 오류 : "+e);}
+		return null;
+	}
 	
 }

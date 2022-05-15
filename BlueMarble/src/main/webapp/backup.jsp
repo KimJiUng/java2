@@ -1,3 +1,4 @@
+
 <%@page import="dao.게임판Dao"%>
 <%@page import="dto.게임판"%>
 <%@page import="java.util.ArrayList"%>
