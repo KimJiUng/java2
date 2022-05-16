@@ -90,9 +90,15 @@ public class ProductDao extends Dao {
 	}
 	
 	// 개별 제품 출력 메소드
-	public Product getproduct(Product product) {
+	public Product getproduct(int pnum) {
 		try {
-			
+			String sql = "select * from product where pnum="+pnum;
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				Product product = new Product(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getFloat(4), rs.getInt(5), rs.getString(6), rs.getInt(7));
+				return product;
+			}
 		}catch(Exception e) {System.out.println("개별 제품 출력 실패 오류 : "+e);}
 		return null;
 	}
@@ -108,7 +114,10 @@ public class ProductDao extends Dao {
 	// 제품 삭제 메소드
 	public boolean pdelete(int pnum) {
 		try {
-			
+			String sql = "delete from product where pnum="+pnum;
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			return true;
 		}catch(Exception e) {System.out.println("제품 삭제 실패 오류 : "+e);}
 		return false;
 	}
@@ -127,9 +136,16 @@ public class ProductDao extends Dao {
 //////////////////////////////////////////////////////////재고 ////////////////////////////////////////////////////////////////////
 	
 	// 제품의 재고 등록
-	public boolean ssave() {
+	public boolean ssave(int pnum, String scolor, String ssize, int samount) {
 		try {
-			
+			String sql = "insert into stock(scolor, ssize, samount,pnum) values(?,?,?,?)";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, scolor);
+			ps.setString(2, ssize);
+			ps.setInt(3, samount);
+			ps.setInt(4, pnum);
+			ps.executeUpdate();
+			return true;
 		}catch(Exception e) {System.out.println("재고 등록 실패 오류 : "+e);}
 		return false;
 	}
@@ -165,9 +181,16 @@ public class ProductDao extends Dao {
 	}
 	
 	// 제품의 재고 수정
-	public boolean supdate(int snum) {
+	public boolean supdate(Stock stock) {
 		try {
-			
+			String sql = "update stock set scolor=? , ssize=?, samount=? where snum=?";
+			ps =con.prepareStatement(sql);
+			ps.setString(1, stock.getScolor());
+			ps.setString(2, stock.getSsize());
+			ps.setInt(3, stock.getSamount());
+			ps.setInt(4, stock.getSnum());
+			ps.executeUpdate();
+			return true;
 		}catch(Exception e) {System.out.println("재고 수정 실패 오류 : "+e);}
 		return false;
 	}

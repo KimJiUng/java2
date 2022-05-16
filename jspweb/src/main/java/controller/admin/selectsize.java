@@ -11,33 +11,50 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.ProductDao;
+import dto.Stock;
 
-@WebServlet("/admin/selectcolor")
-public class selectcolor extends HttpServlet {
+/**
+ * Servlet implementation class selectsize
+ */
+@WebServlet("/admin/selectsize")
+public class selectsize extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-    public selectcolor() {
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public selectsize() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String color = request.getParameter("color");
+		String size = request.getParameter("size");
 		int pnum = Integer.parseInt(request.getParameter("pnum"));
-		ArrayList<String> sizelist = ProductDao.productDao.getsize(pnum, color);
+		String color = request.getParameter("color");
+		ArrayList<Stock> slist = ProductDao.productDao.getstocklist(pnum);
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 		String html = ""; 
-		html += "<option>사이즈 선택</option>";
-		for(String temp : sizelist) {
-			html += "<option value=\""+temp+"\">"+temp+"</option>";
+		for(Stock stock : slist) {
+			if(stock.getSsize().equals(size) && stock.getScolor().equals(color)) {
+				if(stock.getSamount()==0) {
+					html += "a,"+stock.getSupdatedate();
+				}else {
+					html += stock.getSamount()+","+stock.getSupdatedate();
+				}
+				
+			}
 		}
 		out.print(html);
 	}
 
-	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

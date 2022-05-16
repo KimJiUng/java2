@@ -27,8 +27,8 @@
 	}
 	%>
 	<%@include file="../header.jsp" %>
-	<%if(loginid==null){ %>
 	<div class="container">
+	<%if(loginid==null){ %>
 	로그인 이후 이용 가능
 	<%} else{%>
 		<div class="text-center">

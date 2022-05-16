@@ -1,3 +1,6 @@
+<%@page import="java.util.HashSet"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="java.io.BufferedOutputStream"%>
 <%@page import="java.io.FileInputStream"%>
 <%@page import="java.io.BufferedInputStream"%>
@@ -13,25 +16,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link href="/jspweb/css/productlist.css" rel="stylesheet">
 </head>
 <body>
 	
 	<h3>제품 목록 페이지</h3>
-	<table class="table table-hover">
+	<table class="table table-hover producttable">
 		<tr>
-			<th width="5%">제품번호</th>
-			<th width="10%">대표이미지</th>
+			<th width="7%">제품번호</th>
+			<th width="8%">대표이미지</th>
 			<th width="15%">제품명</th>
-			<th width="10%">가격</th>
-			<th width="5%">할인율</th>
-			<th width="10%">판매금액</th>
-			<th width="5%">제품상태</th>
-			<th width="10%">카테고리</th>
-			<th width="5%">색상</th>
-			<th width="5%">사이즈</th>
-			<th width="5%">재고수량</th>
-			<th width="5%">수정일</th>
-			<th width="10%">비고(삭제,수정,재고채우기)</th>
+			<th width="9%">가격</th>
+			<th width="4%">할인율</th>
+			<th width="9%">판매금액</th>
+			<th width="8%">제품상태</th>
+			<th width="7%">카테고리</th>
+			<th width="4%">색상</th>
+			<th width="4%">사이즈</th>
+			<th width="7%">재고수량</th>
+			<th width="10%">수정일</th>
+			<th width="8%">비고(삭제,수정,재고채우기)</th>
 		</tr>
 		<%DecimalFormat decimalFormat = new DecimalFormat("#,###원"); %>
 		<%DecimalFormat decimalFormat2 = new DecimalFormat("#.###%"); %>
@@ -71,45 +75,41 @@
 			<%=categroyname %>
 			</td>
 				<%
-				ArrayList<Stock> slist = ProductDao.productDao.getstocklist(product.getPnum());
+				ArrayList<Stock> stocklist = ProductDao.productDao.getstocklist(product.getPnum());
+				HashSet<String> slist = new HashSet<>();
+				for(Stock stock : stocklist){
+					slist.add(stock.getScolor());
+				}
 				int cnum = 0;
 				%>
 				<td>
-					<select  name="scolor" id="scolor" onchange="changeLangSelect()">
-					<%for(Stock stock : slist) {%>
-						<option value="<%=stock.getScolor()%>"><%=stock.getScolor() %></option>
+					<select id="scolor<%=product.getPnum() %>" onchange="selectcolor(<%=product.getPnum()%>)">
+						<option>색상 선택</option>
+					<%for(String color : slist) {%>
+						<option value="<%=color%>"><%=color %></option>
 					<%} %>
 					
 					</select>
 				</td>
 				<td>
-					<input type="hidden" id="pnumbox" value="<%=product.getPnum()%>">
-					<select id = "sizebox">
-					<%for(Stock stock : slist) {%>
-						<option><%=stock.getSsize() %></option>
-					<%} %>
+					<select id = "sizebox<%=product.getPnum() %>" onchange="selectsize(<%=product.getPnum()%>)">
+						<option>사이즈 선택</option>
 					</select>
 				</td>
-				<td>
-					<select>
-					<%for(Stock stock : slist) {%>
-						<option><%=stock.getSamount() %></option>
-					<%} %>
-					</select>
-				</td>
-				<td>수정일</td>
+				<td id="samount<%=product.getPnum() %>"></td>
+				<td id="supdate<%=product.getPnum() %>"></td>
 			<td>
 				
-				<button>제품 삭제</button>
-				<button>제품 수정</button>
+				<button onclick="deletecheck(<%=product.getPnum() %>)" data-bs-toggle="modal" data-bs-target="#pdeletemodal">제품 삭제</button>
+				<button onclick="getproduct(<%=product.getPnum() %>)" data-bs-toggle="modal" data-bs-target="#pupdatemodal">제품 수정</button>
 				<button onclick="pnummove(<%=product.getPnum() %>)" data-bs-toggle="modal" data-bs-target="#activemodal">상태 변경</button>
-				<button>재고 변경</button>
+				<button onclick="getstock(<%=product.getPnum() %>)" data-bs-toggle="modal" data-bs-target="#supdatemodal">재고 변경</button>
 			</td>
 		</tr>
 		<%} %>
 	</table>
 	
-	<button data-bs-toggle="modal" data-bs-target="#activemodal">모달버튼</button>
+	<button hidden="" data-bs-toggle="modal" data-bs-target="#activemodal"></button>
 	
 	<!-- 상태변경 부트스트랩 - 모달 구역 -->
 	<div class="modal" tabindex="-1" id="activemodal">
@@ -136,6 +136,80 @@
 	  </div>
 	</div>
 	
+	<button hidden="" data-bs-toggle="modal" data-bs-target="#pupdatemodal"></button>
+	
+	<!-- 상태변경 부트스트랩 - 모달 구역 -->
+	<div class="modal" tabindex="-1" id="pupdatemodal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">제품 수정</h5>	<!-- 모달 헤더 -->
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p>변경할 상태를 선택해주세요.</p>	<!-- 모달 바디 -->
+	        <input type="hidden" id="modalinput">
+			<div id="productinfo"></div>
+	      </div>
+	      <div class="modal-footer">	<!-- 모달 푸터 -->
+	      	<button type="button" class="btn btn-primary" onclick="pupdate()">수정</button>
+	        <button type="button" id="modalclosebtn" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<button hidden="" data-bs-toggle="modal" data-bs-target="#supdatemodal"></button>
+	
+	<!-- 상태변경 부트스트랩 - 모달 구역 -->
+	<div class="modal" tabindex="-1" id="supdatemodal">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">제품 재고 변경</h5>	<!-- 모달 헤더 -->
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p>재고 변경!</p>	<!-- 모달 바디 -->
+	        <input type="hidden" id="modalinput">
+			<div id="stocktable"></div>
+			
+			<div id="supdatebox" style="display: none;">
+				<input type="hidden" id="snum">
+				<input type="hidden" id="scolor">
+				<input type="hidden" id="ssize">
+				재고수량 : <input type="text" id="samount">
+			</div>
+	      </div>
+	      <div class="modal-footer">	<!-- 모달 푸터 -->
+	      	<button type="button" class="btn btn-primary" onclick="stockupdate()">변경</button>
+	        <button type="button" id="modalclosebtn3" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<button hidden="" data-bs-toggle="modal" data-bs-target="#pdeletemodal"></button>
+	
+	<!-- 상태변경 부트스트랩 - 모달 구역 -->
+	<div class="modal" tabindex="-1" id="pdeletemodal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">제품 삭제</h5>	<!-- 모달 헤더 -->
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body"> <!-- 모달 바디 -->
+	         <input type="hidden" id="modalinput">
+	         <div id="deletetable"></div>
+	      </div>
+	      <div class="modal-footer">	<!-- 모달 푸터 -->
+	      	<button type="button" class="btn btn-primary" onclick="deleteproduct()">변경</button>
+	        <button type="button" id="modalclosebtn4" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 	<script type="text/javascript" src="/jspweb/js/productlist.js"></script>
 

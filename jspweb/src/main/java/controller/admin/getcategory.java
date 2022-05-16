@@ -33,6 +33,7 @@ public class getcategory extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 		String html = ""; // 응답할 문자열
+		html += "<option>카테고리 선택</option>";
 		for(Category temp : clist) {
 			html += "<option value=\""+temp.getCg_num()+"\">"+temp.getCg_name()+"</option>";
 		}
