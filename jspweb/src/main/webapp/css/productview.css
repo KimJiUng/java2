@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+.viewbox{
+	margin: 50px 0px;
+	
+}
+img{
+	width: 100%;
+}
+
+.view_title{
+	font-size: 25px;
+}
+
+.infobox{
+	border-top: 1px solid black;
+	padding: 20px;
+}
+
+.price_box{
+	margin: 30px 0px;
+}
+
+.price_rat{
+	color: red;
+	font-size: 20px;
+	padding-right: 15px;
+}
+
+.price_discount{
+	font-size: 20px;
+}
+
+.p_price{
+	text-decoration: line-through;
+	padding-left: 15px;
+	color: #999999;
+}
+
+.size_box{
+	margin: 20px 0px;
+}
+
+.info_t{
+	font-size: 13px;
+}
+
+.fc{
+	padding: 0px;
+	font-size: 5px;
+}
+.amount_input{
+	padding: 10px;
+	vertical-align: middle;
+}
+
+.amount_btn{
+	display: block;
+	background-color: white;
+	font-size: 5px;
+	padding: 0px 10px;
+	border: 1px #999999 solid;
+}
+.cansel_btn{
+	background-color: white;
+	border: none;
+	font-size: 10px;
+	color: #999999;
+	padding-top: 10px;
+}
+
+.total_price{
+	text-align: right;
+}
+
+#savepoint{
+	background-color: #b88cc5;
+	color: #ffffff;
+	font-size : 11px;
+	padding : 1px;
+	border-radius: 2px;
+}
+
+.sizecolor{
+	color: #999999;
+}

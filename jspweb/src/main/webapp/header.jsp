@@ -19,15 +19,13 @@
 	<%
 		String loginid =(String)session.getAttribute("loginid"); // 세션 호출 (기본타입 = Object)
 	%> 
-	
-	
-	
+
 	<div class="fixed-top bg-white">
 		<div class="container">
 			<div class="py-4">
 				<div class="row">
 					<div class="col-md-4">
-						<a class="header-logo" href="/jspweb/main.jsp">Home</a>
+						<a class="header-logo" href="/jspweb/main.jsp">EZEN SHOP</a>
 					</div>
 					<div class="col-md-4 offset-4">
 						<!-- 로그인 안된 상태 -->

@@ -179,6 +179,7 @@
 				<input type="hidden" id="scolor">
 				<input type="hidden" id="ssize">
 				재고수량 : <input type="text" id="samount">
+				<div id="deletecheck"></div>
 			</div>
 	      </div>
 	      <div class="modal-footer">	<!-- 모달 푸터 -->

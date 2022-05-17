@@ -70,6 +70,16 @@ function stockadd(){
 				alert("재고등록 실패");
 			}
 		}
-	});
+	});	
+}
+
+function stockdelete(snum){
 	
+	$.ajax({
+		url : "stockdelete" ,
+		data : {"field" : 'stockdelete' , "pnum" : pnum} ,
+		success : function(result){
+			$("#deletecheck").html(result);
+		}
+	});
 }

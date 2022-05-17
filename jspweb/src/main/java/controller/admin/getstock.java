@@ -47,7 +47,7 @@ public class getstock extends HttpServlet {
 				html += "<td colspan=\"5\">등록된 재고 없음</td>";
 			}else {
 				for(Stock temp : slist) {
-					html += "<tr><td>"+temp.getScolor()+"</td><td>"+temp.getSsize()+"</td><td>"+temp.getSamount()+"</td><td>"+temp.getSfirstdate()+"</td><td>"+temp.getSupdatedate()+"</td><td><button onclick=\"showupdate('"+temp.getSnum()+"','"+temp.getScolor()+"','"+temp.getSsize()+"','"+temp.getSamount()+"')\">수정</button></td><td><button>삭제</button></td></tr>";
+					html += "<tr><td>"+temp.getScolor()+"</td><td>"+temp.getSsize()+"</td><td>"+temp.getSamount()+"</td><td>"+temp.getSfirstdate()+"</td><td>"+temp.getSupdatedate()+"</td><td><button onclick=\"showupdate('"+temp.getSnum()+"','"+temp.getScolor()+"','"+temp.getSsize()+"','"+temp.getSamount()+"')\">수정</button></td><td><button onclick=\"stockdelete("+temp.getSnum()+")\">삭제</button></td></tr>";
 				}
 			}
 		}else {

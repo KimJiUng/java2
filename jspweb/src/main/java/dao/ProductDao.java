@@ -198,7 +198,10 @@ public class ProductDao extends Dao {
 	// 제품의 재고 삭제
 	public boolean sdelete(int snum) {
 		try {
-			
+			String sql = "delete from stock where snum="+snum;
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			return true;
 		}catch(Exception e) {System.out.println("재고 삭제 실패 오류 : "+e);}
 		return false;
 	}

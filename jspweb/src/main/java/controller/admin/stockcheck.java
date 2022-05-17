@@ -34,19 +34,33 @@ public class stockcheck extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("삭제");
 		int pnum = Integer.parseInt(request.getParameter("pnum"));
+		String field = request.getParameter("field");
 		ArrayList<Stock> slist = ProductDao.productDao.getstocklist(pnum);
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
-		String html = ""; 
+		String html = "";
 		int samount =0;
-		for(Stock stock : slist) {
-			samount += stock.getSamount();
-		}
-		if(samount==0) {
-			html += "<span>정말 삭제하시겠습니까?</span>";
+		if(field!=null && field.equals("stockdelete")) {
+			int snum = Integer.parseInt(request.getParameter("snum"));
+			Stock stock = ProductDao.productDao.getstock(snum);
+			if(stock.getSamount()==0) {
+				html += "<span>정말 삭제하시겠습니까?</span>";
+			}else {
+				samount = stock.getSamount();
+				html += "<span>해당 상품의 재고가 "+samount+"개 남아있습니다.<br> 정말 삭제하시겠습니까?</span>";
+			}
 		}else {
-			html += "<span>해당 상품의 재고가 "+samount+"개 남아있습니다.<br> 정말 삭제하시겠습니까?</span>";
+			for(Stock stock : slist) {
+				samount += stock.getSamount();
+			}
+			if(samount==0) {
+				html += "<span>정말 삭제하시겠습니까?</span>";
+			}else {
+				html += "<span>해당 상품의 재고가 "+samount+"개 남아있습니다.<br> 정말 삭제하시겠습니까?</span>";
+			}
 		}
+		
+		
 		
 		out.print(html);
 	}
