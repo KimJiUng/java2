@@ -99,20 +99,20 @@
 				</table>
 				<table class="table my-3" id="selectproduct">
 					<tr>
-						<td width="60%">상품명</td>
+						<td width="60%" >상품명</td>
 						<td width="25%">상품수</td>
 						<td width="15%">가격</td>
 					</tr>
 				</table>
 				<div class="row my-4">
 					<div class="col-md-6"> 총 상품금액 </div>
-					<div class="col-md-6 total_price"> 54,900원(1개) </div>
+					<div class="col-md-6 total_price"> <span id="total_price"></span><br> <span id="savemoney"></span> </div>
 				</div>
 				
 				<div class="row my-4">
 					<div class="col-md-4"><button class="form-control p-4" style="background-color: black; color: white;">바로 구매하기</button> </div>
-					<div class="col-md-4"><button class="form-control p-4">장바구니 담기</button> </div>
-					<div class="col-md-4"><button class="form-control p-4">관심상품 등록</button> </div>
+					<div class="col-md-4"><button onclick="cartadd('<%=loginid %>', <%=product.getPnum() %>)" class="form-control p-4">장바구니 담기</button> </div>
+					<div class="col-md-4"><button onclick="wishlistadd('<%=loginid %>' ,<%=product.getPnum() %>)" class="form-control p-4">관심상품 등록</button> </div>
 				</div>
 				
 			</div>
@@ -137,6 +137,55 @@
 		</div>
 		
 	</div>
+	
+	
+	<button hidden="" id="modalclick" data-bs-toggle="modal" data-bs-target="#wishlistmodal"></button>
+	
+	<!-- 상태변경 부트스트랩 - 모달 구역 -->
+	<div class="modal" tabindex="-1" id="wishlistmodal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">관심상품담기</h5>	<!-- 모달 헤더 -->
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body"> <!-- 모달 바디 -->
+	         <input type="hidden" id="modalinput">
+	         <p>선택하신 상품을 관심상품에 담았습니다.<br>
+				지금 관심상품을 확인하시겠습니까?</p>
+	      </div>
+	      <div class="modal-footer">	<!-- 모달 푸터 -->
+	      	<button type="button" class="btn btn-primary" onclick="mywishlist()">관심상품 확인</button>
+	        <button type="button" id="modalclosebtn" class="btn btn-secondary" data-bs-dismiss="modal">쇼핑 계속하기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<button hidden="" id="cartmodalclick" data-bs-toggle="modal" data-bs-target="#carttmodal"></button>
+	
+	<!-- 상태변경 부트스트랩 - 모달 구역 -->
+	<div class="modal" tabindex="-1" id="carttmodal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">장바구니 담기</h5>	<!-- 모달 헤더 -->
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body"> <!-- 모달 바디 -->
+	         <input type="hidden" id="modalinput">
+	         <p>선택하신 상품을 장바구니에 담았습니다.<br>
+				지금 장바구니를 확인하시겠습니까?</p>
+	      </div>
+	      <div class="modal-footer">	<!-- 모달 푸터 -->
+	      	<button type="button" class="btn btn-primary" onclick="mywishlist()">장바구니 확인</button>
+	        <button type="button" id="modalclosebtn" class="btn btn-secondary" data-bs-dismiss="modal">쇼핑 계속하기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
 	<%@include file="../footer.jsp" %>
 	
 	<script src="/jspweb/js/productview.js" type="text/javascript"></script>

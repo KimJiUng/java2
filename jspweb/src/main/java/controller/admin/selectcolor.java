@@ -48,10 +48,10 @@ public class selectcolor extends HttpServlet {
 			for(Stock stock : slist) {
 				if(stock.getScolor().equals(color)) {
 					if(stock.getSamount()==0) {
-						html += "<option class=\"info_t\" value=\""+stock.getSsize()+","+stock.getSnum()+"\">"+stock.getSsize()+"[품절]</option>";
+						html += "<option class=\"info_t\" value=\""+stock.getSsize()+","+stock.getSnum()+"\"> 사이즈 ["+stock.getSsize()+"] 재고 [품절]</option>";
 						map.put(stock.getSsize(), "품절");
 					}else {
-						html += "<option class=\"info_t\" value=\""+stock.getSsize()+","+stock.getSnum()+"\">"+stock.getSsize()+"["+stock.getSamount()+"개]</option>";
+						html += "<option class=\"info_t\" value=\""+stock.getSsize()+","+stock.getSnum()+"\"> 사이즈 ["+stock.getSsize()+"] 재고 ["+stock.getSamount()+"개]</option>";
 						map.put(stock.getSsize(), stock.getSamount()+"개");
 					}
 				}

@@ -2,9 +2,11 @@ package dao;
 
 import java.util.ArrayList;
 
+import dto.Cart;
 import dto.Category;
 import dto.Product;
 import dto.Stock;
+import dto.Wishlist;
 
 public class ProductDao extends Dao {
 
@@ -220,5 +222,96 @@ public class ProductDao extends Dao {
 		}catch(Exception e) {System.out.println("사이즈 출력 오류 : "+e);}
 		return null;
 	}
+	
+////////////////////////////////////// 찜하기 ////////////////////////////////////////////
+	// 관심상품 등록
+	public boolean wishlistadd(Wishlist wishlist) {
+		try {
+			String sql = "insert into wishlist(pnum,mnum,wcolor,wsize,wamount,wrealprice,wsavemoney) values(?,?,?,?,?,?,?)";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, wishlist.getPnum());
+			ps.setInt(2, wishlist.getMnum());
+			ps.setString(3, wishlist.getWcolor());
+			ps.setString(4, wishlist.getWsize());
+			ps.setInt(5, wishlist.getWamount());
+			ps.setInt(6, wishlist.getWrealprice());
+			ps.setInt(7, wishlist.getWsavemoney());
+			ps.executeUpdate();
+			return true;	// 등록
+			
+		}catch(Exception e) {System.out.println("찜하기 오류 : "+e);}
+		return false;	// 오류
+	}
+	
+	// 관심상품 삭제
+	public boolean wishlistdelete(int wnum) {
+		try {
+			String sql = "delete from wishlist where wnum=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, wnum);
+			ps.executeUpdate();
+			return true;
+		}catch(Exception e) {System.out.println("관심상품 삭제 오류 :"+e);}
+			return false;
+	}
+	
+	// 관심상품 불러오기
+	public ArrayList<Wishlist> getwishlist(int mnum){
+		try {
+			ArrayList<Wishlist> wlist = new ArrayList<Wishlist>();
+			String sql = "select * from wishlist where mnum="+mnum;
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				Wishlist wishlist = new Wishlist(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
+				wlist.add(wishlist);
+			}
+			return wlist;		
+		}catch(Exception e) {System.out.println("관심상품 불러오기 오류 : "+e);}
+		return null;
+	}
+
+////////////////////////////////////// 장바구니 //////////////////////////////////////////////
+	// 장바구니 추가
+	public boolean cartadd(Cart cart) {
+		try {
+			String sql = "insert into cart(pnum,mnum,snum,cart_selectamount) values(?,?,?,?)";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, cart.getPnum());
+			ps.setInt(2, cart.getMnum());
+			ps.setInt(3, cart.getSnum());
+			ps.setInt(4, cart.getCart_selectamount());
+			ps.executeUpdate();
+			return true;
+		}catch(Exception e) {System.out.println("장바구니 담기 오류 : "+e);}
+		return false;
+	}
+	
+	// 장바구니 삭제
+	public boolean cartdelete(int cart_num) {
+		try {
+			String sql = "delete from cart where cart_num="+cart_num;
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			return true;
+		}catch(Exception e) {System.out.println("장바구니 삭제 오류 : "+e);}
+		return false;
+	}
+	
+	// 장바구니 불러오기
+		public ArrayList<Cart> getcart(int mnum){
+			try {
+				ArrayList<Cart> clist = new ArrayList<Cart>();
+				String sql = "select * from cart where mnum="+mnum;
+				ps = con.prepareStatement(sql);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					Cart cart = new Cart(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5));
+					clist.add(cart);
+				}
+				return clist;		
+			}catch(Exception e) {System.out.println("장바구니 불러오기 오류 : "+e);}
+			return null;
+		}
 	
 }

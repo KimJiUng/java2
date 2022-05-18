@@ -46,18 +46,21 @@ public class selectoption extends HttpServlet {
 		float saverate = 1;
 		PrintWriter out = response.getWriter();
 		String html = "";	
-		int sumprice =0;
+
 		int realprice=(int)(product.getPprice()*(100-product.getPdiscount() ) )/100;
-		
 		int savemoney = (int)Math.ceil((realprice*saverate/100)/10)*10; 
 		for(Stock stock : slist) {
 			if(stock.getScolor().equals(color) && stock.getSsize().equals(size)) {
+				if(stock.getSamount()==0) {
+					response.getWriter().print(0);
+					return;
+				}
 				html += 
-						"<tr><td style=\"font-size: 13px;\">"+product.getPname()+"<br><span id=\"sizecolor\">"+stock.getScolor()+" / "+size+"</span></td>"
+						"<tr><td style=\"font-size: 13px;\">"+product.getPname()+"<br><span class=\"sizecolor\">- 색상 : "+stock.getScolor()+" / 사이즈 : "+size+"</span></td>"
 						+ "<input type=\"hidden\" id=\""+snum+"\" value=\""+snum+"\">"
 						+ "<td><div class=\"row g-0\">"
 						+ "<div class=\"col-md-7\">"
-						+ "<input id=\"samount"+snum+"\" value=\"1\" type=\"text\" class=\"form-control fc amount_input\" >"
+						+ "<input style=\"background-color: white;\" readonly=\"readonly\" id=\"samount"+snum+"\" value=\"1\" type=\"text\" class=\"form-control fc amount_input\" >"
 						+ "</div>"
 						+ "<div class=\"col-md-4\">"
 						+ "<button onclick=\"amountup("+snum+")\" class=\"amount_btn\">▲</button>"
@@ -71,10 +74,10 @@ public class selectoption extends HttpServlet {
 						+ "<td style=\"font-size: 13px;\">"+decimalFormat.format( (product.getPprice()*(100-product.getPdiscount() ) )/100)
 						+ "<br>(<span id=\"savepoint\">적</span>"+decimalFormat.format(savemoney)+")</td>"
 						+ "</tr>";
-				sumprice += realprice;
+				
 			}
 		}
-		out.print(html+"@@"+snum);
+		out.print(html+"@@"+snum+"@@"+realprice+"@@"+savemoney);
 		
 	}
 

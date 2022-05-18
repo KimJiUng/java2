@@ -1,3 +1,7 @@
+<%@page import="dto.Cart"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="dao.MemberDao"%>
+<%@page import="dao.ProductDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -99,7 +103,16 @@
 					<li class="nav-item"><a href="#" style="color: #FFBB00;">모델처럼입자</a></li>
 					<li class="nav-item"><a href="#" style="color: #FF0000;">50% 할인</a></li>
 					<li class="nav-item"><input type="text" class="header-input" size="13"><a href="#"><i class="fas fa-search"></i></a></li>
-					<li class="nav-item"><a href="#"><i class="fas fa-shopping-cart"></i><span class="shoppingbox">3</span></a></li>
+					<%
+					if(loginid==null){%>
+					<li class="nav-item"><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+						
+					<%}else{
+						int mnum = MemberDao.memberDao.getmember(loginid).getMnum();
+						ArrayList<Cart> clist = ProductDao.productDao.getcart(mnum);%> 
+						<li class="nav-item"><a href="/jspweb/product/wishlist.jsp"><i class="fas fa-shopping-cart"></i><span class="shoppingbox"><%=clist.size() %></span></a></li>
+					<%} %>
+					
 				</ul>
 			</div>
 			
