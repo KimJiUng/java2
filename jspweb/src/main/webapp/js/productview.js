@@ -128,6 +128,8 @@ function cartadd(mid,pnum){
 				success : function(result){
 					if(result==1){
 						$("#cartmodalclick").click();
+					}else if(result==3){
+						alert("이미 장바구니에 있는 상품입니다.");
 					}
 				}
 			});
@@ -146,22 +148,24 @@ function wishlistadd(mid,pnum){
 			success : function(result){
 				if(result==1){
 					$("#modalclick").click();
+				}else if(result==3){
+					alert("이미 관심상품에 등록된 상품입니다.");
 				}
 			}
 		});
 	}else{
 		for(let i=0; i<선택한목록.length; i++){
 			let snum = 선택한목록[i].split("@@")[1];
-			let realprice = 선택한목록[i].split("@@")[2];
-			let savemoney = 선택한목록[i].split("@@")[3];
 			let samount = $("#samount"+snum).val();
 
 			$.ajax({
 				url : "wishlistadd",
-				data : {"mid" : mid , "pnum" : pnum, "snum" : snum, "realprice" : realprice, "savemoney" : savemoney, "samount" :samount},
+				data : {"mid" : mid , "pnum" : pnum, "snum" : snum, "samount" :samount},
 				success : function(result){
 					if(result==1){
 						$("#modalclick").click();
+					}else if(result==3){
+						alert("이미 관심상품에 등록된 상품입니다.");
 					}
 				}
 			});

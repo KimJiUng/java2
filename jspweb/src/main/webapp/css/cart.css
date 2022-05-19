@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+img{
+	width: 100%;
+}
+
+.fc{
+	padding: 0px;
+	font-size: 5px;
+}
+.amount_input{
+	padding: 10px;
+	vertical-align: middle;
+}
+
+.amount_btn{
+	display: block;
+	background-color: white;
+	font-size: 5px;
+	padding: 0px 10px;
+	border: 1px #999999 solid;
+}
+
+.cart_btn button{
+	font-size: 12px;
+}

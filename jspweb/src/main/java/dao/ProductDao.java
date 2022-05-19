@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 import dto.Cart;
@@ -227,15 +228,20 @@ public class ProductDao extends Dao {
 	// 관심상품 등록
 	public boolean wishlistadd(Wishlist wishlist) {
 		try {
-			String sql = "insert into wishlist(pnum,mnum,wcolor,wsize,wamount,wrealprice,wsavemoney) values(?,?,?,?,?,?,?)";
-			ps = con.prepareStatement(sql);
-			ps.setInt(1, wishlist.getPnum());
-			ps.setInt(2, wishlist.getMnum());
-			ps.setString(3, wishlist.getWcolor());
-			ps.setString(4, wishlist.getWsize());
-			ps.setInt(5, wishlist.getWamount());
-			ps.setInt(6, wishlist.getWrealprice());
-			ps.setInt(7, wishlist.getWsavemoney());
+			if(wishlist.getSnum()==0) {
+				String sql = "insert into wishlist(pnum,mnum,wamount) values(?,?,?)";
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, wishlist.getPnum());
+				ps.setInt(2, wishlist.getMnum());
+				ps.setInt(3, wishlist.getWamount());
+			}else {
+				String sql = "insert into wishlist(pnum,mnum,snum,wamount) values(?,?,?,?)";
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, wishlist.getPnum());
+				ps.setInt(2, wishlist.getMnum());
+				ps.setInt(3, wishlist.getSnum());
+				ps.setInt(4, wishlist.getWamount());
+			}
 			ps.executeUpdate();
 			return true;	// 등록
 			
@@ -263,13 +269,34 @@ public class ProductDao extends Dao {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				Wishlist wishlist = new Wishlist(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
+				Wishlist wishlist = new Wishlist(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5));
 				wlist.add(wishlist);
 			}
 			return wlist;		
 		}catch(Exception e) {System.out.println("관심상품 불러오기 오류 : "+e);}
 		return null;
 	}
+	
+	// 관심상품에 등록된 상품인지 확인
+	public boolean wishlistcheck(int mnum, int snum,int amount,int pnum) {
+		try {
+			String sql;
+			if(amount==0) {
+				sql = "select * from wishlist where mnum="+mnum+" and pnum="+pnum;
+			}else {
+				sql = "select * from wishlist where mnum="+mnum+" and snum="+snum;	
+			}
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				return false;
+			}else {
+				return true;
+			}
+		}catch(Exception e) {System.out.println("관심상품 확인 오류 : "+e);}
+		return false;
+	}
+	
 
 ////////////////////////////////////// 장바구니 //////////////////////////////////////////////
 	// 장바구니 추가
@@ -313,5 +340,43 @@ public class ProductDao extends Dao {
 			}catch(Exception e) {System.out.println("장바구니 불러오기 오류 : "+e);}
 			return null;
 		}
+		
+		
+	// 장바구니 수량 변경
+	public boolean updatecart(int cart_num,int cart_selectamount) {
+		try {
+			String sql = "update cart set cart_selectamount="+cart_selectamount+" where cart_num="+cart_num;
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			return true;
+		}catch(Exception e) {System.out.println("장바구니 수량 변경 오류 : "+e);}
+		return false;
+	}
+	
+	// 장바구니 옵션 변경
+	public boolean updateoptioncart(int cart_num,int snum) {
+		try {
+			String sql = "update cart set snum="+snum+" , cart_selectamount=1 where cart_num="+cart_num;
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			return true;
+		}catch(Exception e) {System.out.println("장바구니 옵션 변경 오류 : "+e);}
+		return false;
+	}
+	
+	// 장바구니에 있는 물품인지 확인
+	public boolean cartcheck(int mnum, int snum) {
+		try {
+			String sql = "select * from cart where mnum="+mnum+" and snum="+snum;
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				return false;
+			}else {
+				return true;
+			}
+		}catch(Exception e) {System.out.println("장바구니 확인 오류 : "+e);}
+		return false;
+	}
 	
 }

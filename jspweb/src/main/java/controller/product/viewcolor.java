@@ -1,30 +1,31 @@
 package controller.product;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.MemberDao;
 import dao.ProductDao;
-import dto.Cart;
-import dto.Product;
 import dto.Stock;
-import dto.Wishlist;
 
 /**
- * Servlet implementation class cartadd
+ * Servlet implementation class viewcolor
  */
-@WebServlet("/product/cartadd")
-public class cartadd extends HttpServlet {
+@WebServlet("/product/viewcolor")
+public class viewcolor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public cartadd() {
+    public viewcolor() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,28 +34,20 @@ public class cartadd extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String mid = request.getParameter("mid");
-		int mnum = MemberDao.memberDao.getmember(mid).getMnum();
+		response.setCharacterEncoding("UTF-8");
 		int pnum = Integer.parseInt(request.getParameter("pnum"));
-		int snum = Integer.parseInt(request.getParameter("snum"));
-		int selectamount = Integer.parseInt(request.getParameter("samount"));
-		boolean check = ProductDao.productDao.cartcheck(mnum, snum);
-		if(check) {
-			Cart cart = new Cart(0, pnum, mnum, snum, selectamount);
-			boolean result = ProductDao.productDao.cartadd(cart);
-			System.out.println(result);
-			if(result) {
-				response.getWriter().print(1);
-			}else {
-				response.getWriter().print(2);
-			}
-		}else {
-			response.getWriter().print(3);
+		ArrayList<Stock> slist = ProductDao.productDao.getstocklist(pnum);
+		Set<String> color = new TreeSet<>();
+		for(Stock stock : slist) {
+			color.add(stock.getScolor()); 
 		}
-		
-		
-		
+		PrintWriter out = response.getWriter();
+		String html = "";
+		html += "<option class=\"info_t\">- [필수] 옵션 선택 -</option>";
+		for(String temp : color) {
+			html += "<option value=\""+temp+"\" class=\"info_t\">"+temp+"</option>";		
+		}
+		out.print(html);
 	}
 
 	/**

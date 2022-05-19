@@ -39,29 +39,25 @@ public class wishlistadd extends HttpServlet {
 		int mnum = MemberDao.memberDao.getmember(mid).getMnum();
 		int pnum = Integer.parseInt(request.getParameter("pnum"));
 		String field = request.getParameter("field");
-		String scolor = null;
-		String ssize = null;
-		float saverate = 1;
+		int snum =0;
 		int selectamount =0;
-		Product product = ProductDao.productDao.getproduct(pnum);
-		int price =(int)(product.getPprice()*(100-product.getPdiscount() ) )/100;
-		int savemoney = (int)Math.ceil((price*saverate/100)/10)*10;
 		if(field==null) {
-			int snum = Integer.parseInt(request.getParameter("snum"));
-			price = Integer.parseInt(request.getParameter("realprice"));
-			savemoney = Integer.parseInt(request.getParameter("savemoney"));
+			snum = Integer.parseInt(request.getParameter("snum"));
 			selectamount = Integer.parseInt(request.getParameter("samount"));
-			Stock stock = ProductDao.productDao.getstock(snum);
-			scolor = stock.getScolor();
-			ssize = stock.getSsize();
 		}
-		Wishlist wishlist = new Wishlist(0, pnum, mnum, scolor, ssize, selectamount, price, savemoney);
-		boolean result = ProductDao.productDao.wishlistadd(wishlist);
-		if(result) {
-			response.getWriter().print(1);
+		boolean check = ProductDao.productDao.wishlistcheck(mnum, snum,selectamount,pnum);
+		if(check) {
+			Wishlist wishlist = new Wishlist(0, pnum, mnum, snum, selectamount);
+			boolean result = ProductDao.productDao.wishlistadd(wishlist);
+			if(result) {
+				response.getWriter().print(1);
+			}else {
+				response.getWriter().print(2);
+			}
 		}else {
-			response.getWriter().print(2);
+			response.getWriter().print(3);
 		}
+		
 		
 	}
 
