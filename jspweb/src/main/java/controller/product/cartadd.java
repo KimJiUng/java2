@@ -41,6 +41,11 @@ public class cartadd extends HttpServlet {
 		int selectamount = Integer.parseInt(request.getParameter("samount"));
 		boolean check = ProductDao.productDao.cartcheck(mnum, snum);
 		if(check) {
+			Stock stock = ProductDao.productDao.getstock(snum);
+			if(stock.getSamount()==0) {
+				response.getWriter().print(0);
+				return;
+			}
 			Cart cart = new Cart(0, pnum, mnum, snum, selectamount);
 			boolean result = ProductDao.productDao.cartadd(cart);
 			System.out.println(result);

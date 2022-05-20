@@ -24,3 +24,51 @@ img{
 .cart_btn button{
 	font-size: 12px;
 }
+
+.sizecolor{
+	color: #999999;
+	font-size: 13px;
+}
+
+#savepoint{
+	background-color: #b88cc5;
+	color: #ffffff;
+	font-size : 11px;
+	padding : 1px;
+	border-radius: 2px;
+}
+
+.cart_title{
+	border-bottom: 2px solid black;
+	padding-bottom: 15px; 
+	margin-bottom: 50px;
+	text-align: center;
+	font-size: 30px;
+}
+
+#sum{
+	color: red;
+	font-size: 25px;
+}
+
+.total{
+	font-size: 20px;
+}
+
+
+.cart_selectbtn button{
+	width: 100%;
+	font-size: 20px;
+	padding: 20px 0px;
+}
+
+.totalprint1{
+	margin-top : 50px;
+	text-align: center;
+	background-color: #eeeeee;
+	height: 60px;
+}
+.totalprint2{
+	text-align: center;
+	height: 60px;
+}

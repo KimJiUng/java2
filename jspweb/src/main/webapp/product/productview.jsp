@@ -75,7 +75,7 @@
 					</tr>
 					<tr>
 						<td> SAVE </td>
-						<td> <%=decimalFormat.format(Math.ceil( (realprice*saverate/100)/10 )*10) %> (<%=saverate%>%) </td>
+						<td><%=decimalFormat.format(Math.ceil( (realprice*saverate/100)/10 )*10) %> (<%=saverate%>%) </td>
 					</tr>
 					<tr>
 						<td> COLOR </td>

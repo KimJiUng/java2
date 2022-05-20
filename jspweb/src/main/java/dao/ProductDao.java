@@ -325,6 +325,17 @@ public class ProductDao extends Dao {
 		return false;
 	}
 	
+	// 장바구니 전체삭제
+		public boolean cartdeleteall(int mnum) {
+			try {
+				String sql = "delete from cart where mnum="+mnum;
+				ps = con.prepareStatement(sql);
+				ps.executeUpdate();
+				return true;
+			}catch(Exception e) {System.out.println("장바구니 전체 삭제 오류 : "+e);}
+			return false;
+		}
+	
 	// 장바구니 불러오기
 		public ArrayList<Cart> getcart(int mnum){
 			try {
@@ -340,6 +351,22 @@ public class ProductDao extends Dao {
 			}catch(Exception e) {System.out.println("장바구니 불러오기 오류 : "+e);}
 			return null;
 		}
+
+	// 장바구니 개별 불러오기
+		public Cart getcart1(int cart_num){
+			try {
+				String sql = "select * from cart where cart_num="+cart_num;
+				ps = con.prepareStatement(sql);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					Cart cart = new Cart(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5));
+					return cart;
+				}
+						
+			}catch(Exception e) {System.out.println("장바구니 개별 불러오기 오류 : "+e);}
+			return null;
+		}
+		
 		
 		
 	// 장바구니 수량 변경

@@ -56,10 +56,12 @@ function movecart(wnum,mid,pnum,snum,samount){
 			data : {"mid" : mid , "pnum" : pnum, "snum" : snum, "samount" :samount},
 			success : function(result){
 				if(result==1){
-					wishlistdelete(wnum);
+					location.reload();
 				}else if(result==3){
 					alert("이미 장바구니에 있는 상품입니다.");
 					return;
+				}else if(result==0){
+					alert("해당 상품은 품절되었습니다.");
 				}else{
 					alert("장바구니 담기 오류");
 				}
@@ -169,7 +171,6 @@ function change(){
 	let color = $("#scolor").val();
 	let size = $("#ssize").val();
 	let cart_num = $("#modalinputcnum").val();
-	alert(cart_num);
 	$.ajax({
 		url : "optionchange",
 		data : {"pnum":pnum , "color" : color, "size":size, "cart_num" : cart_num},
@@ -235,6 +236,8 @@ function select(mid){
 						}else if(result==3){
 							alert("이미 장바구니에 있는 상품입니다.");
 							return;
+						}else if(result==0){
+							alert("해당 상품은 품절되었습니다.");
 						}else{
 							alert("장바구니 담기 오류");
 						}
@@ -242,8 +245,188 @@ function select(mid){
 				});
 			}
 		}
-	});
+	});	
+}
+
+function selectAll(selectAll,mid)  {
 	
+	const checkboxes = document.getElementsByName('cartcheck');
+	  
+	checkboxes.forEach((checkbox) => {
+		checkbox.checked = selectAll.checked;
+	})
+	if(selectAll.checked == true){
+		$.ajax({
+			url : "findcartnum",
+			data : {"mid" : mid},
+			success : function(result){
+				checklist = [];
+				let clistsize = result.split("@@")[0];
+				let cartnum = result.split("@@")[1];
+				for(let i=0; i<clistsize; i++){
+					checklist.push(cartnum.split(",")[i]);
+				}
+				$("#cartnumlist").val(checklist);
+			}
+		});
+		$.ajax({
+			url : "cartselect",
+			data : {"mid"  : mid},
+			success : function(result){
+				if(result==0){
+					
+				}else{
+					let a = parseInt(result.split(",")[0]);
+					let b = parseInt(result.split(",")[1]);
+					let c = parseInt($("#deleverpay").val());
+					let total2 = a.toLocaleString('ko-KR')+"원";
+					let totalsavemoney2 =b.toLocaleString('ko-KR')+"원";
+					let totalsum = (a+c).toLocaleString('ko-KR')+"원";
+					let delievr = c.toLocaleString('ko-KR')+"원";
+					$("#delievr").html(delievr);
+					$("#total").html(total2);
+					$("#totalsavemoney").html(totalsavemoney2);
+					$("#sum").html(totalsum);
+				}
+			
+			}
+		});
+	}else{
+		checklist = [];
+		$("#cartnumlist").val(checklist);
+		$("#total").html("");
+		$("#totalsavemoney").html("");
+		$("#sum").html("");
+	}
+}
+let checklist = [];
+
+function check(box,cart_num){
+	let a=0;
+	let b=0;
+	let c = parseInt($("#deleverpay").val());
+	if(box.checked == true){
+		checklist.push(box.value);
+		$("#cartnumlist").val(checklist);
+		for(let i=0; i<checklist.length; i++){
+			$.ajax({
+				url : "cartselect",
+				data : {"cart_num" : checklist[i], "mid" : 0},
+				success : function(result){
+					a += parseInt(result.split(",")[0]);
+					b += parseInt(result.split(",")[1]);
+					let total2 = a.toLocaleString('ko-KR')+"원";
+					let totalsavemoney2 =b.toLocaleString('ko-KR')+"원";
+					let totalsum = (a+c).toLocaleString('ko-KR')+"원";
+					let delievr = c.toLocaleString('ko-KR')+"원";
+					$("#delievr").html(delievr);
+					$("#total").html(total2);
+					$("#totalsavemoney").html(totalsavemoney2);
+					$("#sum").html(totalsum);
+				}
+			});
+		}
+		
+		
+	}
+		
+	else{
+		for(let i=0; i<checklist.length; i++){
+			if(checklist[i] == box.value){
+				checklist.splice(i, 1);
+				$("#cartnumlist").val(checklist);
+				if(checklist.length == 0){
+					$("#total").html("");
+					$("#totalsavemoney").html("");
+					$("#sum").html("");
+				}else{
+					for(let i=0; i<checklist.length; i++){
+						$.ajax({
+							url : "cartselect",
+							data : {"cart_num" : checklist[i], "mid" : 0},
+							success : function(result){
+								a += parseInt(result.split(",")[0]);
+								b += parseInt(result.split(",")[1]);
+								let total2 =a.toLocaleString('ko-KR')+"원";
+								let totalsavemoney2 =b.toLocaleString('ko-KR')+"원";
+								let totalsum = (a+c).toLocaleString('ko-KR')+"원";
+								let delievr = c.toLocaleString('ko-KR')+"원";
+								$("#delievr").html(delievr);
+								$("#total").html(total2);
+								$("#totalsavemoney").html(totalsavemoney2);
+								$("#sum").html(totalsum);
+							}
+						});
+					}
+				}
+				
+			}
+		}
+	}
+		
+}
+
+function cartclear(mid){
+	$.ajax({
+			url : "cartselect",
+			data : {"mid"  : mid},
+			success : function(result){
+				if(result==0){
+					alert("장바구니에 상품이 없습니다.");
+				}else{
+					if(confirm("전체 삭제하시겠습니까?")){
+						$.ajax({
+							url : "cartdelete",
+							data : {"mid" : mid, "cart_num" : 0},
+							success : function(result){
+								if(result==3){
+									location.reload();
+								}else{
+									alert("장바구니 삭제 오류");
+								}
+							}
+						});
+					}
+				}
+			}
+	});
+}
+
+function selectcartdelete(){
+	if(checklist.length==0){
+		alert("선택된 상품이 없습니다.");
+	}else{
+		for(let i=0; i<checklist.length; i++){
+			cartdelete(checklist[i]);
+		}
+	}
+	
+}
+
+function orderall(mid){
+	if(checklist.length==0){
+		$.ajax({
+			url : "findcartnum",
+			data : {"mid" : mid},
+			success : function(result){
+				checklist = [];
+				let clistsize = result.split("@@")[0];
+				let cartnum = result.split("@@")[1];
+				for(let i=0; i<clistsize; i++){
+					checklist.push(cartnum.split(",")[i]);
+				}
+				$("#cartnumlist").val(checklist);
+				location.href = "/jspweb/product/order.jsp?cartnum="+checklist+"&csize="+checklist.length;
+			}
+		});
+
+	}else{
+		location.href = "/jspweb/product/order.jsp?cartnum="+checklist+"&csize="+checklist.length;
+	}
 	
 	
 }
+
+
+
+
