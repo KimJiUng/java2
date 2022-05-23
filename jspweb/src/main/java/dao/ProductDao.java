@@ -1,10 +1,12 @@
 package dao;
 
-import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import dto.Cart;
 import dto.Category;
+import dto.Order;
+import dto.Orderdetail;
 import dto.Product;
 import dto.Stock;
 import dto.Wishlist;
@@ -405,5 +407,51 @@ public class ProductDao extends Dao {
 		}catch(Exception e) {System.out.println("장바구니 확인 오류 : "+e);}
 		return false;
 	}
+	
+	
+///////////////////////////////////////// 주문 ///////////////////////////////////////////////
+	
+	// 주문 저장
+	public int saveorder(Order order) {
+		try {
+			String sql = "insert into porder(ordername,orderphone,orderaddress,ordertotalpay,orderrequest,mnum) values(?,?,?,?,?,?)";
+			ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, order.getOrdername());
+			ps.setString(2, order.getOrderphone());
+			ps.setString(3, order.getOrderaddress());
+			ps.setInt(4, order.getOrdertotalpay());
+			ps.setString(5, order.getOrderrequest());
+			ps.setInt(6, order.getMnum());
+			ps.executeUpdate();
+			// DB에 저장후 생성된 PK값 빼오기
+			rs = ps.getGeneratedKeys();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+		}catch(Exception e) {System.out.println("주문 저장 오류 : "+e);}
+		return 0;
+	}
+	
+	// 주문 디테일 저장
+	public boolean saveorderdetail(Orderdetail orderdetail) {
+		try {
+			String sql = "insert into porderdetail(scolor,ssize,pname,pprice,pdiscount,samount,totalprice,ordernum) values(?,?,?,?,?,?,?,?)";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, orderdetail.getScolor());
+			ps.setString(2, orderdetail.getSsize());
+			ps.setString(3, orderdetail.getPname());
+			ps.setInt(4, orderdetail.getPprice());
+			ps.setFloat(5, orderdetail.getPdiscount());
+			ps.setInt(6, orderdetail.getSamount());
+			ps.setInt(7, orderdetail.getTotalprice());
+			ps.setInt(8, orderdetail.getOrdernum());
+			ps.executeUpdate();
+			return true;
+		}catch(Exception e) {System.out.println("주문 디테일 저장 오류 : "+e);}
+		return false;
+	}
+	
+	
+	
 	
 }

@@ -427,6 +427,14 @@ function orderall(mid){
 	
 }
 
-
+function orderselect(mid){
+	if(checklist.length==0){
+		alert("선택된 상품이 없습니다.");
+	}else{
+		location.href = "/jspweb/product/order.jsp?cartnum="+checklist+"&csize="+checklist.length;
+	}
+	
+	
+}
 
 

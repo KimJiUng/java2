@@ -132,7 +132,7 @@
 					<button style="background-color: black; color: white;" class="form-control" onclick="orderall(<%=loginid%>)">전체상품주문</button>
 				</div>
 				<div class="col-md-2">
-					<button style="background-color: #999999; color: white;" class="form-control">선택상품주문</button>
+					<button style="background-color: #999999; color: white;" onclick="orderselect(<%=loginid %>)" class="form-control">선택상품주문</button>
 				</div>
 			</div>
 			<br><br><br><br><br><br><br>

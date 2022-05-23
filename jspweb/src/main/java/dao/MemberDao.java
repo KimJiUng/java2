@@ -124,6 +124,14 @@ public class MemberDao extends Dao {
 		return null;
 	}
 	
+	// 포인트 변경
+	public boolean point(int mnum, int point) {
+		try {
+			String sql = "update member set mpoint="+point+" where mnum="+mnum;
+		}catch(Exception e) {System.out.println("포인트 변경 오류 : "+e);}
+		return false;
+	}
+	
 
 	
 	
