@@ -19,10 +19,11 @@
 				<%@include file="infosidebar.jsp" %>
 			</div>
 			<div class="col-md-9">
-				<div class="col-md-4 offset-2">
-					<div class="text-center">
-						<h4 class="boardlist-title">회원정보</h4>
-					</div>
+				<div>
+					<h4 class="boardlist-title">회원정보</h4>
+				</div>
+			
+					
 					<%
 						// 1. 세션 호출 [회원id 저장]
 						String mid = (String)session.getAttribute("loginid");
@@ -38,7 +39,7 @@
 					<div class="my-3">주소 : <%=member.getMaddress() %></div>
 					<div class="my-3">포인트 : <%=member.getMpoint() %></div>
 					<div class="my-3">가입날짜 : <%=member.getMsince() %></div>
-				</div>
+			
 			</div>
 		</div>
 	</div>

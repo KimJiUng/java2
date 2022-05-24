@@ -4,33 +4,54 @@ public class Porder {
 	
 	private int ordernum;
 	private String orderdate;
-	private String ordername;
-	private String orderphone;
-	private String orderaddress;
 	private int ordertotalpay;
-	private int orderactive;
-	private String orderrequest;
-	private int orederdelivernum;
-	private int mnum;
+	private int orderdetailactive;
+	private String scolor;
+	private String ssize;
+	private String pname;
+	private int pprice;
+	private float pdiscount;
+	private int samount;
+	private int totalprice;
+	private String pimg;
 	
 	public Porder() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Porder(int ordernum, String orderdate, String ordername, String orderphone, String orderaddress,
-			int ordertotalpay, int orderactive, String orderrequest, int orederdelivernum, int mnum) {
+	
+	
+	
+
+
+
+	public Porder(int ordernum, String orderdate, int ordertotalpay, int orderdetailactive, String scolor, String ssize,
+			String pname, int pprice, float pdiscount, int samount, int totalprice, String pimg) {
 		super();
 		this.ordernum = ordernum;
 		this.orderdate = orderdate;
-		this.ordername = ordername;
-		this.orderphone = orderphone;
-		this.orderaddress = orderaddress;
 		this.ordertotalpay = ordertotalpay;
-		this.orderactive = orderactive;
-		this.orderrequest = orderrequest;
-		this.orederdelivernum = orederdelivernum;
-		this.mnum = mnum;
+		this.orderdetailactive = orderdetailactive;
+		this.scolor = scolor;
+		this.ssize = ssize;
+		this.pname = pname;
+		this.pprice = pprice;
+		this.pdiscount = pdiscount;
+		this.samount = samount;
+		this.totalprice = totalprice;
+		this.pimg = pimg;
 	}
+
+	public String getPimg() {
+		return pimg;
+	}
+
+
+
+	public void setPimg(String pimg) {
+		this.pimg = pimg;
+	}
+
 
 	public int getOrdernum() {
 		return ordernum;
@@ -48,30 +69,6 @@ public class Porder {
 		this.orderdate = orderdate;
 	}
 
-	public String getOrdername() {
-		return ordername;
-	}
-
-	public void setOrdername(String ordername) {
-		this.ordername = ordername;
-	}
-
-	public String getOrderphone() {
-		return orderphone;
-	}
-
-	public void setOrderphone(String orderphone) {
-		this.orderphone = orderphone;
-	}
-
-	public String getOrderaddress() {
-		return orderaddress;
-	}
-
-	public void setOrderaddress(String orderaddress) {
-		this.orderaddress = orderaddress;
-	}
-
 	public int getOrdertotalpay() {
 		return ordertotalpay;
 	}
@@ -80,45 +77,86 @@ public class Porder {
 		this.ordertotalpay = ordertotalpay;
 	}
 
-	public int getOrderactive() {
-		return orderactive;
+	public int getOrderdetailactive() {
+		return orderdetailactive;
 	}
 
-	public void setOrderactive(int orderactive) {
-		this.orderactive = orderactive;
+	public void setOrderdetailactive(int orderdetailactive) {
+		this.orderdetailactive = orderdetailactive;
 	}
 
-	public String getOrderrequest() {
-		return orderrequest;
+	public String getScolor() {
+		return scolor;
 	}
 
-	public void setOrderrequest(String orderrequest) {
-		this.orderrequest = orderrequest;
+	public void setScolor(String scolor) {
+		this.scolor = scolor;
 	}
 
-	public int getOrederdelivernum() {
-		return orederdelivernum;
+	public String getSsize() {
+		return ssize;
 	}
 
-	public void setOrederdelivernum(int orederdelivernum) {
-		this.orederdelivernum = orederdelivernum;
+	public void setSsize(String ssize) {
+		this.ssize = ssize;
 	}
 
-	public int getMnum() {
-		return mnum;
+	public String getPname() {
+		return pname;
 	}
 
-	public void setMnum(int mnum) {
-		this.mnum = mnum;
+	public void setPname(String pname) {
+		this.pname = pname;
 	}
+
+	public int getPprice() {
+		return pprice;
+	}
+
+	public void setPprice(int pprice) {
+		this.pprice = pprice;
+	}
+
+	public float getPdiscount() {
+		return pdiscount;
+	}
+
+	public void setPdiscount(float pdiscount) {
+		this.pdiscount = pdiscount;
+	}
+
+	public int getSamount() {
+		return samount;
+	}
+
+	public void setSamount(int samount) {
+		this.samount = samount;
+	}
+
+	public int getTotalprice() {
+		return totalprice;
+	}
+
+	public void setTotalprice(int totalprice) {
+		this.totalprice = totalprice;
+	}
+
+
+
+
+
+
 
 	@Override
 	public String toString() {
-		return "Porder [ordernum=" + ordernum + ", orderdate=" + orderdate + ", ordername=" + ordername
-				+ ", orderphone=" + orderphone + ", orderaddress=" + orderaddress + ", ordertotalpay=" + ordertotalpay
-				+ ", orderactive=" + orderactive + ", orderrequest=" + orderrequest + ", orederdelivernum="
-				+ orederdelivernum + ", mnum=" + mnum + "]";
+		return "Porder [ordernum=" + ordernum + ", orderdate=" + orderdate + ", ordertotalpay=" + ordertotalpay
+				+ ", orderdetailactive=" + orderdetailactive + ", scolor=" + scolor + ", ssize=" + ssize + ", pname="
+				+ pname + ", pprice=" + pprice + ", pdiscount=" + pdiscount + ", samount=" + samount + ", totalprice="
+				+ totalprice + ", pimg=" + pimg + "]";
 	}
+
+	
+
 	
 	
 	

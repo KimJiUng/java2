@@ -22,23 +22,24 @@
 				<%@include file="infosidebar.jsp" %>
 			</div>
 			<div class="col-md-9">
-				<div class="col-md-2 offset-3">
-					<div class="text-center">
-						<h4 class="boardlist-title">회원탈퇴</h4>
+				
+				<div>
+					<h4 class="boardlist-title">회원탈퇴</h4>
+				</div>
+				<div class="col-md-4">
+					<div class="my-3">
+						<input type="password" class="form-control" id="mpassword" name="mpassword" placeholder="비밀번호 확인">
 					</div>
-						<div class="my-3">
-							<input type="password" class="form-control" id="mpassword" name="mpassword" placeholder="비밀번호 확인">
-						</div>
-						<div class="my-3">
-							<button id="btnconfirm" class="form-control" onclick="passwordcheck('<%=mid %>')" >확인</button>
-						</div>
-						<div class="my-3">
-							<span id="checkmsg"></span>
-						</div>
-						<div class="my-3">
-							<button id="btndelete" class="btn btn-primary" style="display: none;" onclick="mdelete('<%=mid%>')">탈퇴</button>
-						</div>
+					<div class="my-3">
+						<button id="btnconfirm" class="form-control" onclick="passwordcheck('<%=mid %>')" >확인</button>
 					</div>
+					<div class="my-3">
+						<span id="checkmsg"></span>
+					</div>
+					<div class="my-3">
+						<button id="btndelete" class="btn btn-primary" style="display: none;" onclick="mdelete('<%=mid%>')">탈퇴</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

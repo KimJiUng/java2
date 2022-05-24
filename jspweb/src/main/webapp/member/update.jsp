@@ -5,8 +5,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 </head>
 <body>
 	<%@include file="../header.jsp" %>
@@ -28,7 +26,10 @@
 				<%@include file="infosidebar.jsp" %>
 			</div>
 			<div class="col-md-9">
-				<div class="col-md-4 offset-2">
+				<div>
+					<h4 class="boardlist-title">회원 정보 수정</h4>
+				</div>
+				<div class="col-md-6">
 					<%if(request.getParameter("result")!=null && request.getParameter("result").equals("1")){%>
 						회원정보 수정이 완료되었습니다.	
 					<%} else if(request.getParameter("result")!=null && request.getParameter("result").equals("2")){ %>
@@ -36,9 +37,7 @@
 					<%} else if(request.getParameter("result")!=null && request.getParameter("result").equals("3")){ %>
 						비밀번호 수정 실패! 기존 비밀번호가 다릅니다.
 					<%} %>
-					<div class="text-center">
-						<h4 class="boardlist-title">회원 정보 수정</h4>
-					</div>
+					
 					<form action="../Update" method="post">
 						<input type="hidden" value="<%=member.getMnum()%>" name="mnum">
 						<div class="my-3">아이디 : <%=member.getMid() %></div>

@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<ul>
+	<ul class="infosidebar">
 		<li><a href="myshopping.jsp">주문현황</a></li>
 		<li><a href="#">주문조회</a></li>
 		<li><a href="#">관심상품</a></li>

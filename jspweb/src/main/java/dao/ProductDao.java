@@ -3,10 +3,16 @@ package dao;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.mysql.cj.xdevapi.JsonArray;
+
 import dto.Cart;
 import dto.Category;
 import dto.Order;
 import dto.Orderdetail;
+import dto.Porder;
 import dto.Product;
 import dto.Stock;
 import dto.Wishlist;
@@ -435,7 +441,7 @@ public class ProductDao extends Dao {
 	// 주문 디테일 저장
 	public boolean saveorderdetail(Orderdetail orderdetail) {
 		try {
-			String sql = "insert into porderdetail(scolor,ssize,pname,pprice,pdiscount,samount,totalprice,ordernum) values(?,?,?,?,?,?,?,?)";
+			String sql = "insert into porderdetail(scolor,ssize,pname,pprice,pdiscount,samount,totalprice,ordernum,pimg) values(?,?,?,?,?,?,?,?,?)";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, orderdetail.getScolor());
 			ps.setString(2, orderdetail.getSsize());
@@ -445,12 +451,74 @@ public class ProductDao extends Dao {
 			ps.setInt(6, orderdetail.getSamount());
 			ps.setInt(7, orderdetail.getTotalprice());
 			ps.setInt(8, orderdetail.getOrdernum());
+			ps.setString(9, orderdetail.getPimg());
 			ps.executeUpdate();
 			return true;
 		}catch(Exception e) {System.out.println("주문 디테일 저장 오류 : "+e);}
 		return false;
 	}
 	
+	// 주문 불러오기
+	public ArrayList<Porder> getorderdetail(int mnum){
+		try {
+			ArrayList<Porder> olist = new ArrayList<Porder>();
+			String sql = "SELECT porder.ordernum, porder.orderdate, porder.ordertotalpay, porderdetail.orderdetailactive, porderdetail.scolor, porderdetail.ssize, porderdetail.pname, porderdetail.pprice, porderdetail.pdiscount, porderdetail.samount, porderdetail.totalprice, porderdetail.pimg"
+					+ "  FROM porder join porderdetail on porder.ordernum = porderdetail.ordernum where mnum="+mnum;
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				Porder porder = new Porder(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getFloat(9), rs.getInt(10), rs.getInt(11), rs.getString(12));
+				olist.add(porder);
+			}
+			return olist;
+		}catch(Exception e) {System.out.println("주문 불러오기 오류 : "+e);}
+		return null;
+	}
+	
+	// 주문 불러오기
+	public JSONArray getorderdetail1(int mnum){
+		try {
+			String sql = "SELECT porder.ordernum, porder.orderdate, porder.ordertotalpay, porderdetail.orderdetailactive, porderdetail.scolor, porderdetail.ssize, porderdetail.pname, porderdetail.pprice, porderdetail.pdiscount, porderdetail.samount, porderdetail.totalprice, porderdetail.pimg"
+					+ "  FROM porder join porderdetail on porder.ordernum = porderdetail.ordernum where mnum="+mnum+" order by ordernum desc";
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			JSONArray jsonArray = new JSONArray();	// 상위 리스트 [여러개의 하위 리스트]
+			JSONArray JA = new JSONArray();			// 하위 리스트
+			int oldordernum = -1;	// 이전 데이터의 주문번호 변수
+			while(rs.next()) {
+				JSONObject jsonObject = new JSONObject();
+				
+				jsonObject.put("ordernum", rs.getInt(1));
+				jsonObject.put("orderdate", rs.getString(2));
+				jsonObject.put("ordertotalpay", rs.getInt(3));
+				jsonObject.put("orderdetailactive", rs.getInt(4));
+				jsonObject.put("scolor", rs.getString(5));
+				jsonObject.put("ssize", rs.getString(6));
+				jsonObject.put("pname", rs.getString(7));
+				jsonObject.put("pprice", rs.getInt(8));
+				jsonObject.put("pdiscount", rs.getFloat(9));
+				jsonObject.put("samount", rs.getInt(10));
+				jsonObject.put("totalprice", rs.getInt(11));
+				jsonObject.put("pimg", rs.getString(12));
+				
+				// 동일한 주문번호끼리 묶음 처리
+				// { 키 : 값 }
+				// { "ordernum" : [ 키 : 값 , 키 : 값 ] , "ordernum" : [ 키 : 값 , 키 : 값 ] }
+				if(oldordernum == rs.getInt(1)) {	// 이전 주문번호와 현재 주문번호가 같으면
+					JA.put(jsonObject);		// 하위리스트에 데이터 담기
+				}else {
+					JA = new JSONArray();	// 하위리스트 초기화
+					JA.put(jsonObject);		// 하위리스트에 데이터 담기
+					jsonArray.put(JA);		// 상위리스트에 하위리스트 추가
+				}
+				oldordernum = rs.getInt(1);	// 이전 주문번호에 현재 주문번호 넣기
+				
+			}
+			return jsonArray;
+			
+		}catch(Exception e) {System.out.println("주문 불러오기 오류 : "+e);}
+		return null;
+	}
 	
 	
 	

@@ -76,14 +76,23 @@ public class saveorder extends HttpServlet {
 				int pprice = product.getPprice();
 				String scolor = stock.getScolor();
 				String ssize = stock.getSsize();
+				String pimg = product.getPimg();
 				int price =(int)(product.getPprice()*(100-product.getPdiscount() ) )/100;				 
 				int totalprice = price * samount;
 				float saverate = 1;
 				int savemoney = (int)Math.ceil((price*saverate/100)/10)*10;
 				sumsavemoney += savemoney;
-				Orderdetail orderdetail = new Orderdetail(0, 0, scolor, ssize, pname, pprice, pdiscount, samount, totalprice, ordernum);
+				Orderdetail orderdetail = new Orderdetail(0, 0, scolor, ssize, pname, pprice, pdiscount, samount, totalprice, ordernum,pimg);
 				boolean result2 = ProductDao.productDao.saveorderdetail(orderdetail);
 				if(result2) {
+					int newamount = stock.getSamount()-cart.getCart_selectamount();
+					Stock stock2 = new Stock(stock.getSnum(), scolor, ssize, newamount,null , null, cart.getPnum());
+					boolean result4 =ProductDao.productDao.supdate(stock2);
+					if(result4) {
+						
+					}else {
+						check = false;
+					}
 					boolean result3 = ProductDao.productDao.cartdelete(cartnum);
 					if(result3) {
 						

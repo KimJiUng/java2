@@ -13,7 +13,6 @@
     };
     function onMessage(event) {
         textarea.value += event.data + "\n";
-        alert(event.data.split(",")[0]);
         if(event.data.split(",")[0]=="player1"){
 			 $("#player1dice").val(event.data.split(",")[2]);
 		}else if(event.data.split(",")[0]=="player2"){

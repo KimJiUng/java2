@@ -3,8 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<link rel="stylesheet" href="/jspweb/css/myshopping.css">
 </head>
 <body>
 	<%@include file="../header.jsp" %>
@@ -16,12 +15,16 @@
 			<div class="col-md-3">
 				<%@include file="infosidebar.jsp" %>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-9">
 				<h4 class="boardlist-title">주문현황</h4>
+				<table class="table" id="ordertable">
+					
+				</table>
 			</div>
 		</div>
 	</div>
 	<%} %>
 	<%@include file="../footer.jsp" %>
+	<script src="/jspweb/js/myshopping.js" type="text/javascript"></script>
 </body>
 </html>
