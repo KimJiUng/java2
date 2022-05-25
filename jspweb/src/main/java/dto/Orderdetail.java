@@ -13,15 +13,15 @@ public class Orderdetail {
 	private int totalprice;
 	private int ordernum;
 	private String pimg;
+	private String cg_name;
 	
 	public Orderdetail() {
 		// TODO Auto-generated constructor stub
 	}
 
-	
 
 	public Orderdetail(int orderdetailnum, int orderdetailactive, String scolor, String ssize, String pname, int pprice,
-			float pdiscount, int samount, int totalprice, int ordernum, String pimg) {
+			float pdiscount, int samount, int totalprice, int ordernum, String pimg, String cg_name) {
 		super();
 		this.orderdetailnum = orderdetailnum;
 		this.orderdetailactive = orderdetailactive;
@@ -34,9 +34,21 @@ public class Orderdetail {
 		this.totalprice = totalprice;
 		this.ordernum = ordernum;
 		this.pimg = pimg;
+		this.cg_name = cg_name;
 	}
 
-	
+
+	public String getCg_name() {
+		return cg_name;
+	}
+
+
+	public void setCg_name(String cg_name) {
+		this.cg_name = cg_name;
+	}
+
+
+
 
 	public String getPimg() {
 		return pimg;
@@ -132,14 +144,18 @@ public class Orderdetail {
 
 
 
+
 	@Override
 	public String toString() {
 		return "Orderdetail [orderdetailnum=" + orderdetailnum + ", orderdetailactive=" + orderdetailactive
 				+ ", scolor=" + scolor + ", ssize=" + ssize + ", pname=" + pname + ", pprice=" + pprice + ", pdiscount="
 				+ pdiscount + ", samount=" + samount + ", totalprice=" + totalprice + ", ordernum=" + ordernum
-				+ ", pimg=" + pimg + "]";
+				+ ", pimg=" + pimg + ", cg_name=" + cg_name + "]";
 	}
 
+
+
+	
 	
 	
 	

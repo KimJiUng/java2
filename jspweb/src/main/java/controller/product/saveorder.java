@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import dao.MemberDao;
 import dao.ProductDao;
 import dto.Cart;
+import dto.Category;
 import dto.Order;
 import dto.Orderdetail;
 import dto.Product;
@@ -82,7 +83,9 @@ public class saveorder extends HttpServlet {
 				float saverate = 1;
 				int savemoney = (int)Math.ceil((price*saverate/100)/10)*10;
 				sumsavemoney += savemoney;
-				Orderdetail orderdetail = new Orderdetail(0, 0, scolor, ssize, pname, pprice, pdiscount, samount, totalprice, ordernum,pimg);
+				Category category = ProductDao.productDao.getcategory(product.getCg_num());
+				
+				Orderdetail orderdetail = new Orderdetail(0, 0, scolor, ssize, pname, pprice, pdiscount, samount, totalprice, ordernum,pimg, category.getCg_name());
 				boolean result2 = ProductDao.productDao.saveorderdetail(orderdetail);
 				if(result2) {
 					int newamount = stock.getSamount()-cart.getCart_selectamount();

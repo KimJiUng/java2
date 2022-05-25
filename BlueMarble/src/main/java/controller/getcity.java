@@ -46,10 +46,10 @@ public class getcity extends HttpServlet {
 					+ "<input type=\"radio\" id=\"buildingclass1\"> <span>가격 : "+decimalFormat.format(building.get빈땅가격())+"</span> <span>통행료 : "+decimalFormat.format(building.get빈땅통행료())+"</span><br>";
 		}else {
 			html = "<p>"+building.get도시이름()+"</p>"
-					+"<input type=\"radio\" id=\"buildingclass1\">빈땅 <span>가격 : "+decimalFormat.format(building.get빈땅가격())+"</span> <span>통행료 : "+decimalFormat.format(building.get빈땅통행료())+"</span><br>"
-					+ "<input type=\"radio\" id=\"buildingclass1\">별장 <span>가격 : "+decimalFormat.format(building.get별장가격())+"</span> <span>통행료 : "+decimalFormat.format(building.get별장통행료()) +"</span><br>"
-					+ "<input type=\"radio\" id=\"buildingclass1\">빌딩 <span>가격 : "+decimalFormat.format(building.get빌딩가격())+"</span> <span>통행료 : "+decimalFormat.format(building.get빌딩통행료())+"</span><br>"
-					+ "<input type=\"radio\" id=\"buildingclass1\">호텔 <span>가격 : "+decimalFormat.format(building.get호텔가격())+"</span> <span>통행료 : "+decimalFormat.format(building.get호텔통행료()) +"</span><br>";
+					+"<input type=\"radio\" name=\"buildingclass\" value=\"1\" id=\"buildingclass1\">빈땅 <span>가격 : "+decimalFormat.format(building.get빈땅가격())+"</span> <span>통행료 : "+decimalFormat.format(building.get빈땅통행료())+"</span><br>"
+					+ "<input type=\"radio\" name=\"buildingclass\" value=\"2\" id=\"buildingclass2\">별장 <span>가격 : "+decimalFormat.format(building.get별장가격())+"</span> <span>통행료 : "+decimalFormat.format(building.get별장통행료()) +"</span><br>"
+					+ "<input type=\"radio\" name=\"buildingclass\" value=\"3\" id=\"buildingclass3\">빌딩 <span>가격 : "+decimalFormat.format(building.get빌딩가격())+"</span> <span>통행료 : "+decimalFormat.format(building.get빌딩통행료())+"</span><br>"
+					+ "<input type=\"radio\" name=\"buildingclass\" value=\"4\" id=\"buildingclass4\">호텔 <span>가격 : "+decimalFormat.format(building.get호텔가격())+"</span> <span>통행료 : "+decimalFormat.format(building.get호텔통행료()) +"</span><br>";
 		}
 		out.print(html);
 	}

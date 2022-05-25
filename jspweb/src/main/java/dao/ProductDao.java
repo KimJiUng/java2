@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -49,6 +50,20 @@ public class ProductDao extends Dao {
 		}catch(Exception e) {System.out.println("카테고리 호출 실패 오류 : "+e);}
 		return null;
 	}
+	
+	// 카테고리 호출 
+		public Category getcategory(int cg_num) {
+			try {
+				String sql = "select * from category where cg_num="+cg_num;
+				ps = con.prepareStatement(sql);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					Category category = new Category(rs.getInt(1), rs.getString(2));
+					return category;
+				}
+			}catch(Exception e) {System.out.println("카테고리 호출 실패 오류 : "+e);}
+			return null;
+		}
 	
 	// 카테고리 수정 [U]
 	public boolean cupdate() {
@@ -478,7 +493,7 @@ public class ProductDao extends Dao {
 	// 주문 불러오기
 	public JSONArray getorderdetail1(int mnum){
 		try {
-			String sql = "SELECT porder.ordernum, porder.orderdate, porder.ordertotalpay, porderdetail.orderdetailactive, porderdetail.scolor, porderdetail.ssize, porderdetail.pname, porderdetail.pprice, porderdetail.pdiscount, porderdetail.samount, porderdetail.totalprice, porderdetail.pimg"
+			String sql = "SELECT porder.ordernum, porder.orderdate, porder.ordertotalpay, porderdetail.orderdetailactive, porderdetail.scolor, porderdetail.ssize, porderdetail.pname, porderdetail.pprice, porderdetail.pdiscount, porderdetail.samount, porderdetail.totalprice, porderdetail.pimg, porderdetail.orderdetailnum"
 					+ "  FROM porder join porderdetail on porder.ordernum = porderdetail.ordernum where mnum="+mnum+" order by ordernum desc";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -500,7 +515,8 @@ public class ProductDao extends Dao {
 				jsonObject.put("samount", rs.getInt(10));
 				jsonObject.put("totalprice", rs.getInt(11));
 				jsonObject.put("pimg", rs.getString(12));
-				
+				jsonObject.put("orderdetailnum", rs.getInt(13));
+		
 				// 동일한 주문번호끼리 묶음 처리
 				// { 키 : 값 }
 				// { "ordernum" : [ 키 : 값 , 키 : 값 ] , "ordernum" : [ 키 : 값 , 키 : 값 ] }
@@ -520,6 +536,54 @@ public class ProductDao extends Dao {
 		return null;
 	}
 	
+	// 주문 디테일 삭제
+	public boolean orderdetaildelete(int orderdetailnum, int active) {
+		try {
+			String sql = "update porderdetail set orderdetailactive = "+active+" where orderdetailnum="+orderdetailnum;
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			return true;
+		}catch(Exception e) {System.out.println("주문 디테일 삭제 오류 : "+e);}
+		return false;
+	}
 	
+	
+	// 막대차트 자료 가져오기
+	public JSONArray getchart() {
+		try {
+			String sql = "SELECT substring_index(orderdate, ' ', 1) as 날짜 , sum(ordertotalpay) FROM porder group by 날짜 order by 날짜 desc";
+			ps =con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			JSONArray jsonArray = new JSONArray();
+			while(rs.next()) {
+				JSONObject jo = new JSONObject();
+				jo.put("date", rs.getString(1));
+				jo.put("value", rs.getInt(2));
+				jsonArray.put(jo);
+			}
+			return jsonArray;
+		}catch(Exception e) {System.out.println("막대차트 자료 가져오기 오류 : "+e);}
+		return null;
+	}
+	
+	
+	// 원형차트 자료 가져오기
+		public JSONArray getpiechart() {
+			try {
+				String sql = "SELECT count(samount),cg_name FROM porderdetail group by cg_name";
+				ps =con.prepareStatement(sql);
+				ResultSet rs2 =ps.executeQuery();						
+				JSONArray jsonArray = new JSONArray();
+				while(rs2.next()) {
+					JSONObject jo = new JSONObject();
+					jo.put("category", rs2.getString(2));
+					jo.put("value", rs2.getInt(1));
+					jsonArray.put(jo);
+				}
+				return jsonArray;
+			}catch(Exception e) {System.out.println("원형차트 자료 가져오기 오류 : "+e);}
+			
+			return null;
+		}
 	
 }

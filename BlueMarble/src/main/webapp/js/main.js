@@ -19,16 +19,30 @@ function throwDice(playernum,gamenum){
 			}else{
 				alert(sum+"칸 이동");
 				dicethrow = 0;
-				$("#gemetable").load(location.href+" #gemetable");
+				getgamepan();
 				city(result,playernum,gamenum);
+				
 			}
 		}
 	});
 	}
-	
-	
-	
 }
+
+$(function(){
+	getgamepan();
+});
+
+
+function getgamepan(){
+	$.ajax({
+		url : "gamepan",
+		success : function(result){
+			$("#gemetable").html(result);
+		}
+	});
+}
+
+
 
 function city(location,playernum,gamenum){
 	$.ajax({
@@ -37,7 +51,7 @@ function city(location,playernum,gamenum){
 		success : function(result){
 			if(result==1){
 				alert("빈땅 : 구매가능");
-				$("#buymodal").val(gamenum);
+				$("#modalinputgn").val(location);
 				getcity();
 				$("#buymodal").click();
 				
@@ -128,11 +142,30 @@ function turnend(){
 		success : function(result){
 			if(result==1){
 				alert("턴을 종료합니다.");
+				$("#gametable").load(location.href+" #gametable");
 				$("#headtable").load(location.href+" #headtable");
+				
 				dicethrow = 1;
 			}else{
 				alert("오류 - 관리자에게 문의");
 			}
+		}
+	});
+}
+
+function buy(){
+	let location = $("#modalinputgn").val();
+	let pnum = $("#playernum").val();
+	let gamenum = $("#gamenum").val();
+	let buildingclass = $("#buildingclass1").val();
+	//$('input:checkbox[input[name="buildingclass1"]').is(':checked');
+
+	alert($('input:checkbox[input[name="buildingclass"]:checked').val());
+	$.ajax({
+		url : "buycity",
+		data : {"location" : location},
+		success : function(result){
+			
 		}
 	});
 }

@@ -13,6 +13,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<style type="text/css">
+		.player{
+			font-size: 20px;
+			font-weight: bold;
+		}
+
+	</style>
 	<!-- 사용자정의 css -->
 	<link href="main.css" rel="stylesheet">
 	<!-- 부트스트랩 CSS cdn -->
@@ -38,102 +45,23 @@
 		<%} %>
 	<%} %>
 	</div>
-		<div class="row">
-			<div class="col-md-9 offset-1">
-			
-				<div class="row" id="gemetable">
-				<%
-				for(int i=1; i<=121; i++){
-					for(게임판 temp : 게임판리스트){
-						if(i%11==1 && (temp.get게임판위치()+(i/11))==20 ){ %>
-							<div class="gameboard col-md-1 offset-1"><%=temp.get게임판위치() %><br><%=temp.get도시이름() %><br>
-							<%for(플레이어 player : plist){ %>
-							<%if(temp.get게임판위치()==player.get현재위치()){ %>
-								<span <%if(player.get순서()==1){ %>
-								style="color: red;"
-								<%} else if(player.get순서()==2){ %>
-								style="color: blue;"
-								<%} else if(player.get순서()==3){ %>
-								style="color: green;"
-								<%} else if(player.get순서()==4){ %>
-								style="color: purple"
-								<%} %>
-								><%=player.get플레이어닉네임() %></span><br>
-							<%} else{ } }%>
-							</div>
-						<%}else if(i>1 && i<12 &&temp.get게임판위치()-i==19){  %>
-							<div class="gameboard col-md-1"><%=temp.get게임판위치() %><br><%=temp.get도시이름() %><br>
-							<%for(플레이어 player : plist){ %>
-							<%if(temp.get게임판위치()==player.get현재위치()){ %>
-								<span <%if(player.get순서()==1){ %>
-								style="color: red;"
-								<%} else if(player.get순서()==2){ %>
-								style="color: blue;"
-								<%} else if(player.get순서()==3){ %>
-								style="color: green;"
-								<%} else if(player.get순서()==4){ %>
-								style="color: purple"
-								<%} %>
-								><%=player.get플레이어닉네임() %></span><br>
-							<%} else{ } }%>
-							</div>
-						<%}else if(i%11==0 && (temp.get게임판위치()-(i/11))==29) {%>
-							<div class="gameboard col-md-1"><%=temp.get게임판위치() %><br><%=temp.get도시이름() %><br>
-							<%for(플레이어 player : plist){ %>
-							<%if(temp.get게임판위치()==player.get현재위치()){ %>
-								<span <%if(player.get순서()==1){ %>
-								style="color: red;"
-								<%} else if(player.get순서()==2){ %>
-								style="color: blue;"
-								<%} else if(player.get순서()==3){ %>
-								style="color: green;"
-								<%} else if(player.get순서()==4){ %>
-								style="color: purple"
-								<%} %>
-								><%=player.get플레이어닉네임() %></span><br>
-							<%} else{ } }%>
-							</div>
-						<%}else if(i>111 && i<121 && temp.get게임판위치()+i==121) { %>
-							<div class="gameboard col-md-1"><%=temp.get게임판위치() %><br><%=temp.get도시이름() %><br>
-							<%for(플레이어 player : plist){ %>
-							<%if(temp.get게임판위치()==player.get현재위치()){ %>
-								<span <%if(player.get순서()==1){ %>
-								style="color: red;"
-								<%} else if(player.get순서()==2){ %>
-								style="color: blue;"
-								<%} else if(player.get순서()==3){ %>
-								style="color: green;"
-								<%} else if(player.get순서()==4){ %>
-								style="color: purple"
-								<%} %>
-								><%=player.get플레이어닉네임() %></span><br>
-							<%} else{ } }%>
-							</div>
-						<%} %>	
-									
-					<%} %>
-					<%if((i>12 && i<110) && (i%11>1 && i%11<11) ) {%>
-					<div class="gameboard col-md-1" style="border: none;"></div>
-					<%} %>
-					
-				<%} %>
-				</div>
-			</div>
-			
-			<div class="col-md-1">
-			<%for(플레이어 player : plist){ %>
-				<%if(player.get턴()==1) {%>
-					<button onclick="throwDice(<%=player.get플레이어번호()%>,1)">주사위</button><br>
-					주사위 1 값 : <span id = "dice1"></span><br>
-					주사위 2 값 : <span id = "dice2"></span><br>
-					총합 : <span id = "sum"></span><br>
-					<button onclick="turnend()">턴 종료</button>
-				<%}else{ } %>
-			<%} %>
-				
-			</div>
-			
+	<div class="row">
+		<div class="col-md-9 offset-1">
+			<div class="row" id="gemetable"></div>
+		</div>
+		<div class="col-md-1">
+		<%for(플레이어 player : plist){ %>
+			<%if(player.get턴()==1) {%>
+				<button onclick="throwDice(<%=player.get플레이어번호()%>,1)">주사위</button><br>
+				주사위 1 값 : <span id = "dice1"></span><br>
+				주사위 2 값 : <span id = "dice2"></span><br>
+				총합 : <span id = "sum"></span><br>
+				<button onclick="turnend()">턴 종료</button>
+			<%}else{ } %>
+		<%} %>
+		</div>
 	</div>
+		
 	
 	<div class="container">
 		<div>
@@ -188,7 +116,7 @@
 	        <h5 class="modal-title" id="exampleModalLabel">도시 구매</h5>
 	      </div>
 	      <div class="modal-body"> <!-- 모달 바디 --> 
-		        <input type="hidden" id="modalinput">
+		        <input type="hidden" id="modalinputgn">
 		        <div id="modal_contents"></div>
 	      </div>
 	      <div class="modal-footer">

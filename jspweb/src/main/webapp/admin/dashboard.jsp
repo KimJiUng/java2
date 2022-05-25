@@ -30,7 +30,7 @@
 			<li><button onclick="pagechange('productstock')">제품 재고</button> </li>
 			<li><button onclick="#">주문 현황</button> </li>
 			<li><button onclick="#">주문 배송</button> </li>
-			<li><button onclick="#">매출 관리</button> </li>
+			<li><button onclick="pagechange('productsales')">매출 관리</button> </li>
 			<li><a href="/jspweb/main.jsp">홈페이지로 이동</a> </li>
 			<li><a href="/jspweb/Logout">로그아웃</a> </li>
 		</ul>
@@ -48,6 +48,16 @@
 		<h3>관리자 메인페이지</h3>
 	</div>
 
+		
+	
+	<!-- am차트 API -->
+	<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/locales/de_DE.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/geodata/germanyLow.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/fonts/notosans-sc.js"></script>
 	<!-- 부트스트랩 js cdn -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	<!-- jquery 최신 cdn -->
@@ -55,8 +65,7 @@
 	<!-- 사용자 정의 js -->
 	<script src="/jspweb/js/main.js" type="text/javascript"></script>
 	<script src="/jspweb/js/dashboard.js" type="text/javascript"></script>
-	<script src="/jspweb/js/productadd.js" type="text/javascript"></script>
-	<script type="text/javascript" src="/jspweb/js/productlist.js"></script>
+	<script type="text/javascript" src="/jspweb/js/productsales.js"></script>
 
 
 </body>
