@@ -61,8 +61,7 @@
 		<%} %>
 		</div>
 	</div>
-		
-	
+
 	<div class="container">
 		<div>
 			<h3>플레이어 목록</h3>

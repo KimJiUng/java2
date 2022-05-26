@@ -41,6 +41,11 @@ public class getchart extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.setContentType("application/json");
 			response.getWriter().print(jsonArray2);
+		}else if(field!=null && field.equals("line")) {
+			JSONArray jsonArray3 = ProductDao.productDao.getlinechart();
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json");
+			response.getWriter().print(jsonArray3);
 		}
 		
 		

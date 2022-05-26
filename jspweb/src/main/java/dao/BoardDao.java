@@ -46,6 +46,7 @@ public class BoardDao extends Dao {
 				
 			}
 			
+			
 			// 검색이 없을 경우
 			if(keyword==null || keyword.equals("")) {
 				sql = "select * from board order by bnum desc limit "+startrow+","+listsize;

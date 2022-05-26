@@ -11,8 +11,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 </head>
 <body>
 
@@ -111,7 +109,7 @@
 						// 2. JS : "location.href='파일명(경로).jsp?변수명=값'">
 						// 3. java : response.sendRedirect("파일명(경로).jsp?변수명=값");
 				 -->
-				<tr onclick="location.href='boardview.jsp?bnum=<%=temp.getBnum() %>'">
+				<tr onclick="location.href='../board/boardview.jsp?bnum=<%=temp.getBnum() %>'">
 					<td><%=temp.getBnum() %></td>
 					<td style="text-align: left;"><%=temp.getBtitle() %>
 					<%if(i!=0) {%>

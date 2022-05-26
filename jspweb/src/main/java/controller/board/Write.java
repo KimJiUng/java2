@@ -98,12 +98,11 @@ public class Write extends HttpServlet {
 		int mnum = member.getMnum();
 		int totalrow = BoardDao.boardDao.gettotalrow(null, null);
 		Board board = new Board(0, btitle, bcontent, mnum, 0, null, bfile, mid);
-		ArrayList<Board> blist = BoardDao.boardDao.getboardlist(0,totalrow,null,null);
+		ArrayList<Board> blist = BoardDao.boardDao.getboardlist(0,totalrow,"btitle",null);
 		for(Board temp : blist) {
 			if(temp.getMid()!=null && temp.getMid().equals(mid)) {
 				Date writetime = format.parse(temp.getBdate());
 				if(Math.abs(writetime.toInstant().until(now, ChronoUnit.MINUTES))<5) {
-					System.out.println(Math.abs(writetime.toInstant().until(now, ChronoUnit.MINUTES)));
 					out.println("<script>");
 					out.println("alert('5분안에 새로운 글 작성은 불가능합니다.');");
 					out.println("history.back();");

@@ -27,6 +27,7 @@
 	}
 	%>
 	<%@include file="../header.jsp" %>
+	<br><br><br><br><br><br><br>
 	<div class="container">
 	<%if(loginid==null){ %>
 	로그인 이후 이용 가능

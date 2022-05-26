@@ -33,7 +33,7 @@
 			<h4 class="cart_title">장바구니</h4>
 			<table class="table">
 				<tr>
-					<th style="text-align: center;" width="8%">전체선택<br><input class="form-check-input" type="checkbox" id="cartcheck" name="cartcheck" onclick="selectAll(this,<%=loginid%>)"> </th>
+					<th style="text-align: center;" width="8%">전체선택<br><input class="form-check-input" type="checkbox" id="cartcheck" name="cartcheck" onclick="selectAll(this,'<%=loginid%>')"> </th>
 					<th width="10%">이미지</th>
 					<th width="25%">상품정보</th>
 					<th width="9%">판매가</th>
@@ -126,13 +126,13 @@
 					<button style="background-color: #999999; color: white;" class="form-control" onclick="selectcartdelete()">선택상품삭제하기</button>
 				</div>
 				<div class="col-md-2">
-					<button style="background-color: #999999; color: white;" class="form-control" onclick="cartclear(<%=loginid%>)">장바구니 비우기</button>
+					<button style="background-color: #999999; color: white;" class="form-control" onclick="cartclear('<%=loginid%>')">장바구니 비우기</button>
 				</div>
 				<div class="col-md-2">
-					<button style="background-color: black; color: white;" class="form-control" onclick="orderall(<%=loginid%>)">전체상품주문</button>
+					<button style="background-color: black; color: white;" class="form-control" onclick="orderall('<%=loginid%>')">전체상품주문</button>
 				</div>
 				<div class="col-md-2">
-					<button style="background-color: #999999; color: white;" onclick="orderselect(<%=loginid %>)" class="form-control">선택상품주문</button>
+					<button style="background-color: #999999; color: white;" onclick="orderselect('<%=loginid %>')" class="form-control">선택상품주문</button>
 				</div>
 			</div>
 			<br><br><br><br><br><br><br>
@@ -238,7 +238,7 @@
 			</select> 
 	      </div>
 	      <div class="modal-footer">	<!-- 모달 푸터 -->
-	      	<button type="button" class="btn btn-primary" onclick="select(<%=loginid%>)">장바구니에 추가</button>
+	      	<button type="button" class="btn btn-primary" onclick="select('<%=loginid%>')">장바구니에 추가</button>
 	        <button type="button" id="modalclosebtn" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
 	      </div>
 	    </div>

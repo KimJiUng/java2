@@ -456,7 +456,7 @@ public class ProductDao extends Dao {
 	// 주문 디테일 저장
 	public boolean saveorderdetail(Orderdetail orderdetail) {
 		try {
-			String sql = "insert into porderdetail(scolor,ssize,pname,pprice,pdiscount,samount,totalprice,ordernum,pimg) values(?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into porderdetail(scolor,ssize,pname,pprice,pdiscount,samount,totalprice,ordernum,pimg,cg_name) values(?,?,?,?,?,?,?,?,?,?)";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, orderdetail.getScolor());
 			ps.setString(2, orderdetail.getSsize());
@@ -467,13 +467,30 @@ public class ProductDao extends Dao {
 			ps.setInt(7, orderdetail.getTotalprice());
 			ps.setInt(8, orderdetail.getOrdernum());
 			ps.setString(9, orderdetail.getPimg());
+			ps.setString(10, orderdetail.getCg_name());
 			ps.executeUpdate();
 			return true;
 		}catch(Exception e) {System.out.println("주문 디테일 저장 오류 : "+e);}
 		return false;
 	}
+	// 오늘 주문 불러오기
+	public ArrayList<Orderdetail> getorderlist() {
+		try {
+			ArrayList<Orderdetail> odlist = new ArrayList<Orderdetail>();
+			String sql = "SELECT B.*, substring_index(A.orderdate,' ', 1) FROM porder A, porderdetail B where A.ordernum = B.ordernum and substring_index(A.orderdate,' ', 1)=substring_index(now(),' ',1) and orderdetailactive=3";
+			ps =con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				Orderdetail orderdetail = new Orderdetail(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getFloat(7), rs.getInt(8), rs.getInt(9), rs.getInt(10), rs.getString(11), rs.getString(12));
+				odlist.add(orderdetail);
+			}
+			return odlist;
+		}catch(Exception e) {System.out.println("오늘 주문 불러오기 오류 : "+e);}
+		return null;
+	}
 	
-	// 주문 불러오기
+	
+	// 주문 불러오기 (ArrayList)
 	public ArrayList<Porder> getorderdetail(int mnum){
 		try {
 			ArrayList<Porder> olist = new ArrayList<Porder>();
@@ -490,7 +507,7 @@ public class ProductDao extends Dao {
 		return null;
 	}
 	
-	// 주문 불러오기
+	// 주문 불러오기 (JSON)
 	public JSONArray getorderdetail1(int mnum){
 		try {
 			String sql = "SELECT porder.ordernum, porder.orderdate, porder.ordertotalpay, porderdetail.orderdetailactive, porderdetail.scolor, porderdetail.ssize, porderdetail.pname, porderdetail.pprice, porderdetail.pdiscount, porderdetail.samount, porderdetail.totalprice, porderdetail.pimg, porderdetail.orderdetailnum"
@@ -568,22 +585,41 @@ public class ProductDao extends Dao {
 	
 	
 	// 원형차트 자료 가져오기
-		public JSONArray getpiechart() {
-			try {
-				String sql = "SELECT count(samount),cg_name FROM porderdetail group by cg_name";
-				ps =con.prepareStatement(sql);
-				ResultSet rs2 =ps.executeQuery();						
-				JSONArray jsonArray = new JSONArray();
-				while(rs2.next()) {
-					JSONObject jo = new JSONObject();
-					jo.put("category", rs2.getString(2));
-					jo.put("value", rs2.getInt(1));
-					jsonArray.put(jo);
-				}
-				return jsonArray;
-			}catch(Exception e) {System.out.println("원형차트 자료 가져오기 오류 : "+e);}
-			
-			return null;
-		}
+	public JSONArray getpiechart() {
+		try {
+			String sql = "SELECT count(samount),cg_name FROM porderdetail group by cg_name";
+			ps =con.prepareStatement(sql);
+			ResultSet rs2 =ps.executeQuery();						
+			JSONArray jsonArray = new JSONArray();
+			while(rs2.next()) {
+				JSONObject jo = new JSONObject();
+				jo.put("category", rs2.getString(2));
+				jo.put("value", rs2.getInt(1));
+				jsonArray.put(jo);
+			}
+			return jsonArray;
+		}catch(Exception e) {System.out.println("원형차트 자료 가져오기 오류 : "+e);}
+		
+		return null;
+	}
+	// 라인차트 자료 가져오기
+	public JSONArray getlinechart() {
+		try {
+			String sql = "select B.pname as 제품이름, sum(B.samount) as 판매수량,substring_index(A.orderdate,' ',1) as 날짜 from porder A join porderdetail B on A.ordernum = B.ordernum group by 제품이름,날짜";
+			ps =con.prepareStatement(sql);
+			ResultSet rs3 =ps.executeQuery();						
+			JSONArray jsonArray = new JSONArray();
+			while(rs3.next()) {
+				JSONObject jo = new JSONObject();
+				jo.put("date", rs3.getString(3));
+				jo.put("value", rs3.getInt(2));
+				jo.put("pname", rs3.getString(1));
+				jsonArray.put(jo);
+			}
+			return jsonArray;
+		}catch(Exception e) {System.out.println("라인차트 자료 가져오기 오류 : "+e);}
+		
+		return null;
+	}
 	
 }
