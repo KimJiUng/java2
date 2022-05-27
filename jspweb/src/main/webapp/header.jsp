@@ -48,7 +48,8 @@
 									<li><a class="hearder-topmenu" href="/jspweb/Logout">로그아웃</a></li>
 								<%} %>
 								<li><a class="hearder-topmenu" href="/jspweb/board/boardlist.jsp?key=&keyword=">자유게시판</a></li>
-								<li><a class="hearder-topmenu" href="/jspweb/board/chatting.jsp">채팅방</a></li>
+								<li><a class="hearder-topmenu" href="/jspweb/board/chatting.jsp">채팅방(DB)</a></li>
+								<li><a class="hearder-topmenu" href="/jspweb/board/chatting2.jsp">채팅방(Socket)</a></li>
 							</ul>
 						</div>
 					</div>
