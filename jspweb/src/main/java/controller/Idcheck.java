@@ -23,6 +23,7 @@ public class Idcheck extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		response.getWriter().print("test");
 		String mid = request.getParameter("mid");
 		String table = "mid";
 		// 1. Dao를 이용한 해당 id가 있는지 체크
@@ -34,7 +35,6 @@ public class Idcheck extends HttpServlet {
 			response.getWriter().print(2);
 		}
 		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
